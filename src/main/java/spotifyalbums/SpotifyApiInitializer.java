@@ -9,7 +9,7 @@ import org.apache.hc.core5.http.ParseException;
 import java.io.IOException;
 import java.util.List;
 
-public class SpotifyApiIniInitializer {
+public class SpotifyApiInitializer {
 
     public SpotifyApi initializeApi() throws IOException, ParseException, SpotifyWebApiException {
         ClientCredentialsLoader credentialsLoader = new ClientCredentialsLoader();
