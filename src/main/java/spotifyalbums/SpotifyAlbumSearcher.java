@@ -21,12 +21,12 @@ public class SpotifyAlbumSearcher {
     }
 
     public Album searchForAlbum() throws ParseException, SpotifyWebApiException, IOException {
-        String albumId = searchForAlbumSimplified();
+        String albumId = searchForAlbumSimplifiedID();
         GetAlbumRequest albumRequest = spotifyApi.getAlbum(albumId).build();
         return albumRequest.execute();
     }
 
-    private String searchForAlbumSimplified() throws ParseException, SpotifyWebApiException, IOException {
+    private String searchForAlbumSimplifiedID() throws ParseException, SpotifyWebApiException, IOException {
         SearchAlbumsRequest searchAlbumsRequest = spotifyApi.searchAlbums(albumName).limit(1).build();
         Paging<AlbumSimplified> albumSimplifiedPaging = searchAlbumsRequest.execute();
         AlbumSimplified albumSimplified = albumSimplifiedPaging.getItems()[0];
