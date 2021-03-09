@@ -11,24 +11,27 @@ import java.util.List;
 
 public class SpotifyApiInitializer {
 
-    public SpotifyApi initializeApi() {
+    public SpotifyApi initializeApi() throws SpotifyWebApiException {
         ClientCredentialsLoader credentialsLoader = new ClientCredentialsLoader();
         List<String> clientCredentialsList = credentialsLoader.loadCredentialsFrom("clientcredentials.txt");
         return initializeWithClientCredentialFlow(clientCredentialsList);
     }
 
-    private SpotifyApi initializeWithClientCredentialFlow(List<String> clientCredentialsList) {
+    private SpotifyApi initializeWithClientCredentialFlow(List<String> clientCredentialsList) throws SpotifyWebApiException {
         SpotifyApi spotifyApi = SpotifyApi.builder().setClientId(clientCredentialsList.get(0))
                 .setClientSecret(clientCredentialsList.get(1))
                 .build();
         ClientCredentialsRequest credentialsRequest = spotifyApi.clientCredentials().build();
-        try {
-            ClientCredentials clientCredentials = credentialsRequest.execute();
-            spotifyApi.setAccessToken(clientCredentials.getAccessToken());
-        } catch (IOException | ParseException | SpotifyWebApiException exception) {
-            System.out.println("Error:" + exception.getMessage());
-        }
+        spotifyApi.setAccessToken(executeClientCredentialsRequest(credentialsRequest).getAccessToken());
         return spotifyApi;
+    }
+
+    private ClientCredentials executeClientCredentialsRequest(ClientCredentialsRequest request) throws SpotifyWebApiException {
+        try {
+            return request.execute();
+        } catch (IOException | ParseException | SpotifyWebApiException e) {
+            throw new SpotifyWebApiException();
+        }
     }
 
 }

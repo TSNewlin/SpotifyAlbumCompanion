@@ -13,17 +13,22 @@ import java.io.IOException;
 
 public class SpotifyAlbumSearcher {
 
-    private static final SpotifyApi spotifyApi = new SpotifyApiInitializer().initializeApi();
+    private final SpotifyApi spotifyApi;
     private final String albumName;
 
-    public SpotifyAlbumSearcher(String albumName) {
+    public SpotifyAlbumSearcher(String albumName) throws SpotifyWebApiException {
         this.albumName = albumName;
+        this.spotifyApi = new SpotifyApiInitializer().initializeApi();
     }
 
-    public Album searchForAlbum() throws ParseException, SpotifyWebApiException, IOException {
-        String albumId = searchForAlbumSimplifiedID();
-        GetAlbumRequest albumRequest = spotifyApi.getAlbum(albumId).build();
-        return albumRequest.execute();
+    public Album searchForAlbum() throws SpotifyWebApiException {
+        try {
+            String albumId = searchForAlbumSimplifiedID();
+            GetAlbumRequest albumRequest = spotifyApi.getAlbum(albumId).build();
+            return albumRequest.execute();
+        } catch (ParseException | SpotifyWebApiException | IOException e) {
+            throw new SpotifyWebApiException();
+        }
     }
 
     private String searchForAlbumSimplifiedID() throws ParseException, SpotifyWebApiException, IOException {
