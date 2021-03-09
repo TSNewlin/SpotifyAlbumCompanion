@@ -1,5 +1,6 @@
 package spotifyalbums;
 
+import com.wrapper.spotify.SpotifyApi;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -14,6 +15,7 @@ import java.util.Objects;
 
 public class InputArea extends VBox {
 
+    SpotifyApiInitializer spotifyApiInitializer = new SpotifyApiInitializer();
     private final List<Listener> eventListeners = new ArrayList<>();
     private TextField queryField;
 
