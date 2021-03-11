@@ -1,11 +1,11 @@
 package spotifyalbums;
 
 import com.wrapper.spotify.SpotifyApi;
+import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -37,8 +37,7 @@ public class InputArea extends VBox {
 
     public InputArea() {
         Node queryArea = createInputArea();
-        Button searchButton = createSearchButton();
-        getChildren().addAll(queryArea, searchButton);
+        getChildren().addAll(queryArea);
         setAlignment(Pos.CENTER);
     }
 
@@ -50,19 +49,29 @@ public class InputArea extends VBox {
     }
 
     public Node createInputArea() {
-        VBox innerQueryArea = createInnerInputArea();
-        HBox inputBox = new HBox();
-        inputBox.getChildren().add(innerQueryArea);
-        inputBox.setAlignment(Pos.CENTER);
+        HBox innerQueryArea = createInnerInputArea();
+        ChoiceBox<String> filterBox = createFilterBox();
+        HBox inputBox = new HBox(35);
+        inputBox.setPadding(new Insets(5, 0, 5, 0));
+        inputBox.getChildren().addAll(innerQueryArea, filterBox);
         return inputBox;
     }
 
-    private VBox createInnerInputArea() {
+    private HBox createInnerInputArea() {
         queryField = new TextField();
         queryField.setOnAction(event -> fireOnAlbumTitleSpecified());
-        VBox innerQueryAreaBox = new VBox();
-        innerQueryAreaBox.setAlignment(Pos.CENTER);
-        innerQueryAreaBox.getChildren().addAll(new Label("Album Title: "), queryField);
+        queryField.setPromptText("Enter an album name.");
+        queryField.setPrefWidth(220);
+        Button searchButton = createSearchButton();
+        HBox innerQueryAreaBox = new HBox();
+        innerQueryAreaBox.getChildren().addAll(queryField, searchButton);
         return innerQueryAreaBox;
+    }
+
+    private ChoiceBox<String> createFilterBox() {
+        ChoiceBox<String> filterBox = new ChoiceBox<>(FXCollections.observableArrayList(
+                "All informtion", "Album Information", "Track Information"));
+        filterBox.getSelectionModel().selectFirst();
+        return filterBox;
     }
 }

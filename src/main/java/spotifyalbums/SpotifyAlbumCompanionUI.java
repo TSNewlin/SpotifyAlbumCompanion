@@ -29,6 +29,7 @@ public class SpotifyAlbumCompanionUI extends Application {
     public void start(Stage primaryStage) {
         Parent ui = createUI();
         primaryStage.setScene(new Scene(ui));
+        primaryStage.setTitle("Album Companion");
         primaryStage.show();
     }
 
