@@ -27,4 +27,4 @@ javafx {
     modules = [ 'javafx.controls' ]
 }
 
-mainClassName = "spotifyalbums.SpotifyAlbumCompanionUI"
+mainClassName = "spotifyalbums.gui.SpotifyAlbumCompanionUI"
