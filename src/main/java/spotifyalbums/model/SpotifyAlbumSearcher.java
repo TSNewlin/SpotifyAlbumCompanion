@@ -1,4 +1,4 @@
-package spotifyalbums;
+package spotifyalbums.model;
 
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;

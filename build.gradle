@@ -15,6 +15,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     compile 'se.michaelthelin.spotify:spotify-web-api-java:6.5.2'
+    implementation 'com.google.code.gson:gson:2.8.6'
 }
 
 test {

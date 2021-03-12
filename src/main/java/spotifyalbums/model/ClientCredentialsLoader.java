@@ -1,4 +1,4 @@
-package spotifyalbums;
+package spotifyalbums.model;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,14 +1,12 @@
-package spotifyalbums;
+package spotifyalbums.gui;
 
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.specification.Album;
 import com.wrapper.spotify.model_objects.specification.ArtistSimplified;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
+import spotifyalbums.model.SpotifyAlbumSearcher;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

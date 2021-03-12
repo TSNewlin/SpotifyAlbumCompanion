@@ -1,4 +1,4 @@
-package spotifyalbums;
+package spotifyalbums.gui;
 
 import com.wrapper.spotify.model_objects.specification.Album;
 import com.wrapper.spotify.model_objects.specification.Paging;

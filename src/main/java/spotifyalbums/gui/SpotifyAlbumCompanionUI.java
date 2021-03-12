@@ -1,11 +1,10 @@
-package spotifyalbums;
+package spotifyalbums.gui;
 
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
