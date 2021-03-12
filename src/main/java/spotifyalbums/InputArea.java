@@ -15,7 +15,6 @@ import java.util.Objects;
 
 public class InputArea extends VBox {
 
-    SpotifyApiInitializer spotifyApiInitializer = new SpotifyApiInitializer();
     private final List<Listener> eventListeners = new ArrayList<>();
     private TextField queryField;
 
