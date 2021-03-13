@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import spotifyalbums.model.InformationType;
 import spotifyalbums.model.SpotifyAlbumSearcher;
 
 import java.util.concurrent.ExecutorService;
@@ -18,7 +19,6 @@ public class SpotifyAlbumCompanionUI extends Application {
 
     private final InformationView informationView = new InformationView();
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
-    private Album album;
 
 
     @Override
@@ -31,15 +31,15 @@ public class SpotifyAlbumCompanionUI extends Application {
 
     private Parent createUI() {
         InputArea inputArea = new InputArea();
-        inputArea.addListener(this::findAlbumInformationOf);
+        inputArea.addListener(this::querySpotifyForAlbum);
         return new VBox(inputArea, informationView);
     }
 
-    private void findAlbumInformationOf(String albumTitle) {
+    private void querySpotifyForAlbum(String albumTitle) {
         executor.execute(() -> Platform.runLater(() -> {
             try {
                 SpotifyAlbumSearcher searcher = new SpotifyAlbumSearcher(albumTitle);
-                this.album = searcher.searchForAlbum();
+                Album album = searcher.searchForAlbum();
                 informationView.show(album);
             } catch (SpotifyWebApiException exception) {
                 System.out.println("Error: " + exception.getMessage());
