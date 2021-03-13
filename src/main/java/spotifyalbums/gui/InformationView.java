@@ -1,11 +1,9 @@
 package spotifyalbums.gui;
 
-import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.specification.Album;
 import com.wrapper.spotify.model_objects.specification.ArtistSimplified;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
-import spotifyalbums.model.SpotifyAlbumSearcher;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,9 +17,7 @@ public class InformationView extends VBox {
         getChildren().add(resultArea);
     }
 
-    public void showAlbumInformationOf(String albumTitle) throws SpotifyWebApiException {
-        SpotifyAlbumSearcher spotifyAlbumSearcher = new SpotifyAlbumSearcher(albumTitle);
-        Album album = spotifyAlbumSearcher.searchForAlbum();
+    public void show(Album album) {
         resultArea.clear();
         StringBuilder builder = new StringBuilder();
         for (String i : getInformationList(album)) {

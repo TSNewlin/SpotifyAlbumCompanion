@@ -5,7 +5,6 @@ import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.credentials.ClientCredentials;
 import com.wrapper.spotify.requests.authorization.client_credentials.ClientCredentialsRequest;
 import org.apache.hc.core5.http.ParseException;
-import spotifyalbums.model.ClientCredentialsLoader;
 
 import java.io.IOException;
 import java.util.List;
