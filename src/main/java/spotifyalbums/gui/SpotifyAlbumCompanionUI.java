@@ -8,7 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import spotifyalbums.model.InformationType;
 import spotifyalbums.model.SpotifyAlbumSearcher;
 
 import java.util.concurrent.ExecutorService;

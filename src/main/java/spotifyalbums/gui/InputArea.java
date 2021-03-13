@@ -1,5 +1,8 @@
 package spotifyalbums.gui;
 
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -17,6 +20,7 @@ import java.util.Objects;
 public class InputArea extends VBox {
 
     private final List<Listener> eventListeners = new ArrayList<>();
+    private final BooleanProperty searchEnabled = new SimpleBooleanProperty(false);
     private TextField queryField;
 
     public interface Listener {
@@ -38,17 +42,32 @@ public class InputArea extends VBox {
     public InputArea() {
         Node queryArea = createInputArea();
         getChildren().addAll(queryArea);
+        configureSearchEnablingBindingProperty();
         setAlignment(Pos.CENTER);
     }
 
     private Button createSearchButton() {
         Objects.requireNonNull(queryField, "Query field must be made before the button");
         Button searchButton = new Button("Album Search");
+        searchButton.disableProperty().bind(searchEnabled.not());
         searchButton.setOnAction(event -> fireOnAlbumTitleSpecified());
         return searchButton;
     }
 
-    public Node createInputArea() {
+    private void configureSearchEnablingBindingProperty() {
+        BooleanBinding textAvailabilityBinding = new BooleanBinding() {
+            {
+                bind(queryField.textProperty());
+            }
+            @Override
+            protected boolean computeValue() {
+                return !queryField.getText().trim().isEmpty();
+            }
+        };
+        searchEnabled.bind(textAvailabilityBinding);
+    }
+
+    private Node createInputArea() {
         HBox innerQueryArea = createInnerInputArea();
         ChoiceBox<String> filterBox = createFilterBox();
         HBox inputBox = new HBox(35);

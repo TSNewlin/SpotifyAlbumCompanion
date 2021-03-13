@@ -2,7 +2,7 @@ package spotifyalbums.model;
 
 public enum InformationType {
 
-    PARTICULARS,
+    FACTS,
     TRACKS
 
 }
