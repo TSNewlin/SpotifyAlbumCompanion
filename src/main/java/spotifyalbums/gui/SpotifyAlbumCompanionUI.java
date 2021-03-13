@@ -52,7 +52,8 @@ public class SpotifyAlbumCompanionUI extends Application {
 
     private void showAlert(SpotifyWebApiException exception){
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setHeaderText("There was an error while making requests to spotify.");
+        alert.setHeaderText("There was an error while making requests to spotify\n" +
+                "or the album you are searching for does not exist.");
         alert.setContentText("See stacktrace for more details.");
         alert.getDialogPane().setExpandableContent(setupStackTraceContent(exception));
         alert.show();

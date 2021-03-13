@@ -10,6 +10,7 @@ import spotifyalbums.model.AlbumDurationCalculator;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class InformationView extends GridPane {
 

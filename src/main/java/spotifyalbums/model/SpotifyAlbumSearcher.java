@@ -34,6 +34,9 @@ public class SpotifyAlbumSearcher {
     private String searchForAlbumSimplifiedID() throws ParseException, SpotifyWebApiException, IOException {
         SearchAlbumsRequest searchAlbumsRequest = spotifyApi.searchAlbums(albumName).limit(1).build();
         Paging<AlbumSimplified> albumSimplifiedPaging = searchAlbumsRequest.execute();
+        if (albumSimplifiedPaging.getTotal() == 0) {
+            return "";
+        }
         AlbumSimplified albumSimplified = albumSimplifiedPaging.getItems()[0];
         return albumSimplified.getId();
     }
