@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -20,7 +21,7 @@ import java.util.concurrent.Executors;
 
 public class SpotifyAlbumCompanionUI extends Application {
 
-    private final InformationView informationView = new InformationView();
+    private final FactsView factsView = new FactsView();
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
 
@@ -35,7 +36,10 @@ public class SpotifyAlbumCompanionUI extends Application {
     private Parent createUI() {
         InputArea inputArea = new InputArea();
         inputArea.addListener(this::querySpotifyForAlbum);
-        return new VBox(inputArea, informationView);
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(factsView);
+        scrollPane.setPrefHeight(300);
+        return new VBox(inputArea, scrollPane);
     }
 
     private void querySpotifyForAlbum(String albumTitle) {
@@ -43,14 +47,14 @@ public class SpotifyAlbumCompanionUI extends Application {
             try {
                 SpotifyAlbumSearcher searcher = new SpotifyAlbumSearcher(albumTitle);
                 Album album = searcher.searchForAlbum();
-                informationView.show(album);
+                factsView.show(album);
             } catch (SpotifyWebApiException exception) {
                 showAlert(exception);
             }
         }));
     }
 
-    private void showAlert(SpotifyWebApiException exception){
+    private void showAlert(SpotifyWebApiException exception) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText("There was an error while making requests to spotify\n" +
                 "or the album you are searching for does not exist.");
