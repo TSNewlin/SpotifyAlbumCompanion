@@ -64,14 +64,26 @@ public class SpotifyAlbumCompanionUI extends Application {
     private void changeSeenOutput(InformationType informationType) {
         Platform.runLater(() -> {
             if (informationType == InformationType.FACTS) {
-                factsView.setVisible(true);
-                tracksView.setVisible(false);
+                makeFactsViewVisible();
             }
             if (informationType == InformationType.TRACKS) {
-                tracksView.setVisible(true);
-                factsView.setVisible(false);
+                makeTracksViewVisible();
             }
         });
+    }
+
+    private void makeFactsViewVisible() {
+        factsView.setVisible(true);
+        factsView.setManaged(true);
+        tracksView.setVisible(false);
+        tracksView.setManaged(false);
+    }
+
+    private void makeTracksViewVisible() {
+        tracksView.setVisible(true);
+        tracksView.setManaged(true);
+        factsView.setVisible(false);
+        factsView.setManaged(false);
     }
 
     private void querySpotifyForAlbum(String albumTitle) {
