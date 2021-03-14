@@ -11,6 +11,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import spotifyalbums.model.InformationType;
 import spotifyalbums.model.SpotifyAlbumSearcher;
 
 import java.io.PrintWriter;
@@ -22,6 +23,7 @@ import java.util.concurrent.Executors;
 public class SpotifyAlbumCompanionUI extends Application {
 
     private final FactsView factsView = new FactsView();
+    private final TracksView tracksView = new TracksView();
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
 
@@ -35,11 +37,41 @@ public class SpotifyAlbumCompanionUI extends Application {
 
     private Parent createUI() {
         InputArea inputArea = new InputArea();
-        inputArea.addListener(this::querySpotifyForAlbum);
+        inputArea.addListener(new InputArea.Listener() {
+            @Override
+            public void onAlbumTitleSpecified(String albumTitle) {
+                querySpotifyForAlbum(albumTitle);
+            }
+
+            @Override
+            public void onInformationTypeSelected(InformationType informationType) {
+                changeSeenOutput(informationType);
+            }
+        });
+        ScrollPane bottomArea = setUpBottomArea();
+        return new VBox(inputArea, bottomArea);
+    }
+
+    private ScrollPane setUpBottomArea() {
+        VBox innerScrollBox = new VBox();
+        innerScrollBox.getChildren().addAll(tracksView, factsView);
         ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setContent(factsView);
+        scrollPane.setContent(innerScrollBox);
         scrollPane.setPrefHeight(300);
-        return new VBox(inputArea, scrollPane);
+        return scrollPane;
+    }
+
+    private void changeSeenOutput(InformationType informationType) {
+        Platform.runLater(() -> {
+            if (informationType == InformationType.FACTS) {
+                factsView.setVisible(true);
+                tracksView.setVisible(false);
+            }
+            if (informationType == InformationType.TRACKS) {
+                tracksView.setVisible(true);
+                factsView.setVisible(false);
+            }
+        });
     }
 
     private void querySpotifyForAlbum(String albumTitle) {
@@ -48,6 +80,7 @@ public class SpotifyAlbumCompanionUI extends Application {
                 SpotifyAlbumSearcher searcher = new SpotifyAlbumSearcher(albumTitle);
                 Album album = searcher.searchForAlbum();
                 factsView.show(album);
+                tracksView.show(album);
             } catch (SpotifyWebApiException exception) {
                 showAlert(exception);
             }

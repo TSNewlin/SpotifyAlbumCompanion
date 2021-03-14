@@ -13,18 +13,23 @@ public class FactsView extends InformationView {
 
     public FactsView() {
         super();
-        this.add(new Text("Title"), 0, 0);
+        add(new Text("Title"), 0, 0);
+        add(new Text("Artist"), 0, 1);
+        add(new Text("Release Date"), 0, 2);
+        add(new Text("Spotify Popularity"), 0, 3);
+        add(new Text("Duration"), 0, 4);
+        add(new Text("Record Label"), 0, 5);
     }
 
     public void show(Album album) {
-        this.getChildren().removeIf(node -> getColumnIndex(node) == 1);
+        getChildren().removeIf(node -> getColumnIndex(node) == 1);
         formatGrid(album);
     }
 
     public void formatGrid(Album album) {
         List<Text> informationList = getInformationList(album);
         for (int i = 0; i < informationList.size(); i++) {
-            this.add(informationList.get(i), 1, i);
+            add(informationList.get(i), 1, i);
         }
     }
 

@@ -12,7 +12,7 @@ public class TracksView extends InformationView{
     }
 
     public void show(Album album) {
-        this.getChildren().clear();
+        getChildren().clear();
         formatGrid(album);
     }
 
