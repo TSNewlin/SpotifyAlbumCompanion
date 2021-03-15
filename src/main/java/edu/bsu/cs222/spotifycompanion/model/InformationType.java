@@ -1,4 +1,4 @@
-package spotifyalbums.model;
+package edu.bsu.cs222.spotifycompanion.model;
 
 public enum InformationType {
 

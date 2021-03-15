@@ -1,4 +1,4 @@
-package spotifyalbums.gui;
+package edu.bsu.cs222.spotifycompanion.gui;
 
 import com.wrapper.spotify.model_objects.specification.Album;
 import com.wrapper.spotify.model_objects.specification.Paging;

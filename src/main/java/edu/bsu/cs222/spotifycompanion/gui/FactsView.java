@@ -1,9 +1,9 @@
-package spotifyalbums.gui;
+package edu.bsu.cs222.spotifycompanion.gui;
 
 import com.wrapper.spotify.model_objects.specification.Album;
 import com.wrapper.spotify.model_objects.specification.ArtistSimplified;
+import edu.bsu.cs222.spotifycompanion.model.AlbumDurationCalculator;
 import javafx.scene.text.Text;
-import spotifyalbums.model.AlbumDurationCalculator;
 
 import java.time.Duration;
 import java.util.Arrays;

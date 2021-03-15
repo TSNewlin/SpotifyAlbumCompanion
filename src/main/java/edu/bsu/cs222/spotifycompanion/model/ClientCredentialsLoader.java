@@ -1,4 +1,4 @@
-package spotifyalbums.model;
+package edu.bsu.cs222.spotifycompanion.model;
 
 import java.io.BufferedReader;
 import java.io.IOException;

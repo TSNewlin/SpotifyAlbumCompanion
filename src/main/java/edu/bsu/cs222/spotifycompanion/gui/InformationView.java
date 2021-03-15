@@ -1,4 +1,4 @@
-package spotifyalbums.gui;
+package edu.bsu.cs222.spotifycompanion.gui;
 
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;

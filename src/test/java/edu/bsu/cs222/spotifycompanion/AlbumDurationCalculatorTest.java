@@ -1,11 +1,11 @@
-package spotifyalbums;
+package edu.bsu.cs222.spotifycompanion;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.wrapper.spotify.model_objects.specification.Album;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import spotifyalbums.model.AlbumDurationCalculator;
+import edu.bsu.cs222.spotifycompanion.model.AlbumDurationCalculator;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

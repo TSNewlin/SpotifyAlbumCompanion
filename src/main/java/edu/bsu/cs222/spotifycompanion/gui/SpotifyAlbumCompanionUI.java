@@ -1,4 +1,4 @@
-package spotifyalbums.gui;
+package edu.bsu.cs222.spotifycompanion.gui;
 
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.specification.Album;
@@ -11,8 +11,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import spotifyalbums.model.InformationType;
-import spotifyalbums.model.SpotifyAlbumSearcher;
+import edu.bsu.cs222.spotifycompanion.model.InformationType;
+import edu.bsu.cs222.spotifycompanion.model.SpotifyAlbumSearcher;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

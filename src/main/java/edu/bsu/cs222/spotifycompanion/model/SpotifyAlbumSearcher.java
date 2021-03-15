@@ -1,4 +1,4 @@
-package spotifyalbums.model;
+package edu.bsu.cs222.spotifycompanion.model;
 
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;

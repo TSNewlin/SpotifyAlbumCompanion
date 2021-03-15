@@ -1,4 +1,4 @@
-package spotifyalbums.gui;
+package edu.bsu.cs222.spotifycompanion.gui;
 
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
@@ -12,7 +12,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import spotifyalbums.model.InformationType;
+import edu.bsu.cs222.spotifycompanion.model.InformationType;
 
 import java.util.ArrayList;
 import java.util.List;

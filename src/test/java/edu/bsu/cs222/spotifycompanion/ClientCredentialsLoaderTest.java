@@ -1,8 +1,8 @@
-package spotifyalbums;
+package edu.bsu.cs222.spotifycompanion;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import spotifyalbums.model.ClientCredentialsLoader;
+import edu.bsu.cs222.spotifycompanion.model.ClientCredentialsLoader;
 
 import java.util.Arrays;
 import java.util.List;
