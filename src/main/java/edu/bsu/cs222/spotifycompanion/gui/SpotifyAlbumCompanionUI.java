@@ -12,7 +12,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import edu.bsu.cs222.spotifycompanion.model.InformationType;
-import edu.bsu.cs222.spotifycompanion.model.SpotifyAlbumSearcher;
+import edu.bsu.cs222.spotifycompanion.model.SpotifyApiApplicant;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -89,8 +89,8 @@ public class SpotifyAlbumCompanionUI extends Application {
     private void querySpotifyForAlbum(String albumTitle) {
         executor.execute(() -> Platform.runLater(() -> {
             try {
-                SpotifyAlbumSearcher searcher = new SpotifyAlbumSearcher(albumTitle);
-                Album album = searcher.searchForAlbum();
+                SpotifyApiApplicant searcher = new SpotifyApiApplicant();
+                Album album = searcher.searchForAlbum(albumTitle);
                 factsView.show(album);
                 tracksView.show(album);
             } catch (SpotifyWebApiException exception) {

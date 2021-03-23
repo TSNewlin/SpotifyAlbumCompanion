@@ -20,8 +20,8 @@ public class TracksView extends InformationView{
         Paging<TrackSimplified> tracksPaging = album.getTracks();
         int counter = 0;
         for (TrackSimplified track : tracksPaging.getItems()) {
-            this.add(new Text("Track #" + track.getTrackNumber()), 0, counter );
-            this.add(new Text(track.getName()), 1, counter);
+            add(new Text("Track #" + track.getTrackNumber()), 0, counter );
+            add(new Text(track.getName()), 1, counter);
             counter++;
         }
     }
