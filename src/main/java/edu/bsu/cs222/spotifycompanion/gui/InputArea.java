@@ -3,17 +3,14 @@ package edu.bsu.cs222.spotifycompanion.gui;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import edu.bsu.cs222.spotifycompanion.model.InformationType;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -22,8 +19,10 @@ public class InputArea extends VBox {
 
     private final List<Listener> eventListeners = new ArrayList<>();
     private final BooleanProperty searchEnabled = new SimpleBooleanProperty(false);
+    private final BooleanProperty switchedOn = new SimpleBooleanProperty(false);
     private TextField queryField;
-    private ComboBox<InformationType> filterBox;
+    private Label switchLabel;
+    private Button switchButton;
 
     public InputArea() {
         Node queryArea = createInputArea();
@@ -56,10 +55,10 @@ public class InputArea extends VBox {
 
     private Node createInputArea() {
         HBox innerQueryArea = createInnerInputArea();
-        setupFilterBox();
+        HBox filterSwitch = createFilterSwitch();
         HBox inputBox = new HBox(35);
         inputBox.setPadding(new Insets(5, 0, 5, 0));
-        inputBox.getChildren().addAll(innerQueryArea, filterBox);
+        inputBox.getChildren().addAll(innerQueryArea, filterSwitch);
         return inputBox;
     }
 
@@ -74,16 +73,49 @@ public class InputArea extends VBox {
         return innerQueryAreaBox;
     }
 
-    private void setupFilterBox() {
-        filterBox = new ComboBox<>(FXCollections.observableArrayList(
-                InformationType.FACTS, InformationType.TRACKS));
-        filterBox.setPromptText("Choose information.");
-        filterBox.setOnAction(event -> fireOnInformationTypeSelected());
+    private HBox createFilterSwitch() {
+        Button switchButton = createSwitchButton();
+        Label switchLabel = createSwitchLabel();
+        HBox filterSwitch = new HBox();
+        filterSwitch.getChildren().addAll(switchLabel, switchButton);
+        filterSwitch.setStyle("-fx-background-color: grey; -fx-text-fill:black; -fx-background-radius: 4;");
+        filterSwitch.setAlignment(Pos.CENTER_LEFT);
+        switchLabel.setAlignment(Pos.CENTER);
+        return filterSwitch;
+    }
+
+    private Button createSwitchButton() {
+        switchButton = new Button();
+        switchButton.prefWidthProperty().bind(widthProperty().divide(3));
+        switchButton.prefHeightProperty().bind(heightProperty().divide(2));
+        switchButton.setOnAction(event ->
+                fireOnInformationTypeSelected());
+        return switchButton;
+    }
+
+    private Label createSwitchLabel() {
+        switchLabel = new Label("Facts");
+        switchLabel.prefWidthProperty().bind(widthProperty().divide(3));
+        switchLabel.prefHeightProperty().bind(heightProperty().divide(2));
+        switchLabel.setOnMouseClicked(event ->
+                fireOnInformationTypeSelected());
+        return switchLabel;
+    }
+
+    private void changeSeenSwitchPositions() {
+        switchedOn.set(!switchedOn.getValue());
+        if (switchedOn.getValue()) {
+            switchLabel.setText("Tracks");
+            switchLabel.toFront();
+        } else {
+            switchLabel.setText("Facts");
+            switchButton.toFront();
+        }
     }
 
     public interface Listener {
         void onAlbumTitleSpecified(String albumTitle);
-        void onInformationTypeSelected(InformationType informationType);
+        void onInformationTypeSelected(Boolean switchState);
     }
 
     public void addListener(Listener listener) {
@@ -100,7 +132,8 @@ public class InputArea extends VBox {
 
     private void fireOnInformationTypeSelected() {
         for (Listener eventListener : eventListeners) {
-            eventListener.onInformationTypeSelected(filterBox.getValue());
+            eventListener.onInformationTypeSelected(switchedOn.getValue());
         }
+        changeSeenSwitchPositions();
     }
 }
