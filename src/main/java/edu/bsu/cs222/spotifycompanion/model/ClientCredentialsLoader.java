@@ -12,22 +12,19 @@ public class ClientCredentialsLoader {
 
     private BufferedReader reader;
 
-    public List<String> loadCredentialsFrom(String fileName) {
+    public List<String> loadCredentialsFrom(String fileName) throws IOException{
         InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);
         reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(inputStream)));
         return parseLineToList();
     }
 
-    private List<String> parseLineToList() {
+    private List<String> parseLineToList() throws IOException {
         List<String> credentialsList = new ArrayList<>();
-        try{
-            String line;
-            while ((line = reader.readLine()) != null) {
-                credentialsList.add(line);
-            }
-        } catch (IOException ioException) {
-            System.out.println("IOException:" + ioException.getMessage());
+        String line;
+        while ((line = reader.readLine()) != null) {
+            credentialsList.add(line);
         }
         return credentialsList;
     }
+
 }
