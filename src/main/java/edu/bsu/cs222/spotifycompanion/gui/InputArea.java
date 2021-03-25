@@ -33,7 +33,9 @@ public class InputArea extends VBox {
 
     private Button createSearchButton() {
         Objects.requireNonNull(queryField, "Query field must be made before the button");
-        Button searchButton = new Button("Album Search");
+        Button searchButton = new Button("\u2315");
+        searchButton.setPrefWidth(80);
+        searchButton.setRotate(-90);
         searchButton.disableProperty().bind(searchEnabled.not());
         searchButton.setOnAction(event -> fireOnAlbumTitleSpecified());
         return searchButton;
