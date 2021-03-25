@@ -2,6 +2,7 @@ package edu.bsu.cs222.spotifycompanion.gui;
 
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.specification.Album;
+import edu.bsu.cs222.spotifycompanion.model.SpotifyApiApplicant;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Parent;
@@ -11,8 +12,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import edu.bsu.cs222.spotifycompanion.model.InformationType;
-import edu.bsu.cs222.spotifycompanion.model.SpotifyAlbumSearcher;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -44,8 +43,8 @@ public class SpotifyAlbumCompanionUI extends Application {
             }
 
             @Override
-            public void onInformationTypeSelected(InformationType informationType) {
-                changeSeenOutput(informationType);
+            public void onInformationTypeSelected(Boolean switchState) {
+                changeSeenOutput(switchState);
             }
         });
         ScrollPane bottomArea = setUpBottomArea();
@@ -55,18 +54,20 @@ public class SpotifyAlbumCompanionUI extends Application {
     private ScrollPane setUpBottomArea() {
         VBox innerScrollBox = new VBox();
         innerScrollBox.getChildren().addAll(tracksView, factsView);
+        factsView.setVisible(true);
+        factsView.setManaged(true);
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(innerScrollBox);
         scrollPane.setPrefHeight(300);
         return scrollPane;
     }
 
-    private void changeSeenOutput(InformationType informationType) {
+    private void changeSeenOutput(Boolean switchState) {
         Platform.runLater(() -> {
-            if (informationType == InformationType.FACTS) {
+            if (switchState) {
                 makeFactsViewVisible();
             }
-            if (informationType == InformationType.TRACKS) {
+            if (!switchState) {
                 makeTracksViewVisible();
             }
         });
@@ -89,8 +90,8 @@ public class SpotifyAlbumCompanionUI extends Application {
     private void querySpotifyForAlbum(String albumTitle) {
         executor.execute(() -> Platform.runLater(() -> {
             try {
-                SpotifyAlbumSearcher searcher = new SpotifyAlbumSearcher(albumTitle);
-                Album album = searcher.searchForAlbum();
+                SpotifyApiApplicant searcher = new SpotifyApiApplicant();
+                Album album = searcher.searchForAlbum(albumTitle);
                 factsView.show(album);
                 tracksView.show(album);
             } catch (SpotifyWebApiException exception) {
