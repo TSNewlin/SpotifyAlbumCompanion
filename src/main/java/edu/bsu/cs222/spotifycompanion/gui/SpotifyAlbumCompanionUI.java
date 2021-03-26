@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -24,6 +25,7 @@ public class SpotifyAlbumCompanionUI extends Application {
     private final FactsView factsView = new FactsView();
     private final TracksView tracksView = new TracksView();
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
+    private final AlbumRecommendationsUI albumRecommendationsUI = new AlbumRecommendationsUI();
 
 
     @Override
@@ -35,11 +37,22 @@ public class SpotifyAlbumCompanionUI extends Application {
     }
 
     private Parent createUI() {
+        VBox informationUI = createInformationVBox();
+        VBox recommendedUI = createRecommendedVBox();
+        return new HBox(informationUI, recommendedUI);
+    }
+
+    private VBox createRecommendedVBox() {
+        return new VBox(albumRecommendationsUI);
+    }
+
+    private VBox createInformationVBox() {
         InputArea inputArea = new InputArea();
         inputArea.addListener(new InputArea.Listener() {
             @Override
             public void onAlbumTitleSpecified(String albumTitle) {
                 querySpotifyForAlbum(albumTitle);
+                addRecommendedAlbumTitle(albumTitle);
             }
 
             @Override
@@ -100,6 +113,10 @@ public class SpotifyAlbumCompanionUI extends Application {
         }));
     }
 
+    private void addRecommendedAlbumTitle(String albumTitle) {
+        albumRecommendationsUI.addAlbumTitle(albumTitle);
+    }
+
     private void showAlert(SpotifyWebApiException exception) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText("There was an error while making requests to spotify\n" +
@@ -122,5 +139,6 @@ public class SpotifyAlbumCompanionUI extends Application {
         exception.printStackTrace(printWriter);
         return stringWriter.toString();
     }
+
 
 }

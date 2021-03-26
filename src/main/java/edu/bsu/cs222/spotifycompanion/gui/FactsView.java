@@ -26,7 +26,7 @@ public class FactsView extends InformationView {
         formatGrid(album);
     }
 
-    public void formatGrid(Album album) {
+    private void formatGrid(Album album) {
         List<Text> informationList = getInformationList(album);
         for (int i = 0; i < informationList.size(); i++) {
             add(informationList.get(i), 1, i);
