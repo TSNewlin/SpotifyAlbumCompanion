@@ -2,6 +2,7 @@ package edu.bsu.cs222.spotifycompanion.gui;
 
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.specification.Album;
+import edu.bsu.cs222.spotifycompanion.model.InformationType;
 import edu.bsu.cs222.spotifycompanion.model.SpotifyApiApplicant;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -43,8 +44,8 @@ public class SpotifyAlbumCompanionUI extends Application {
             }
 
             @Override
-            public void onInformationTypeSelected(Boolean switchState) {
-                changeSeenOutput(switchState);
+            public void onInformationTypeSelected(InformationType informationType) {
+                changeSeenOutput(informationType);
             }
         });
         ScrollPane bottomArea = setUpBottomArea();
@@ -62,12 +63,12 @@ public class SpotifyAlbumCompanionUI extends Application {
         return scrollPane;
     }
 
-    private void changeSeenOutput(Boolean switchState) {
+    private void changeSeenOutput(InformationType informationType) {
         Platform.runLater(() -> {
-            if (switchState) {
+            if (informationType.equals(InformationType.TRACKS)) {
                 makeFactsViewVisible();
             }
-            if (!switchState) {
+            if (informationType.equals(InformationType.FACTS)) {
                 makeTracksViewVisible();
             }
         });
