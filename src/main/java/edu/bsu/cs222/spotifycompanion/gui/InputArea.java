@@ -90,8 +90,7 @@ public class InputArea extends VBox {
         switchButton = new Button();
         switchButton.prefWidthProperty().bind(widthProperty().divide(3));
         switchButton.prefHeightProperty().bind(heightProperty().divide(2));
-        switchButton.setOnAction(event ->
-                fireOnInformationTypeSelected());
+        switchButton.setOnAction(event -> fireOnInformationTypeSelected());
         return switchButton;
     }
 
@@ -99,8 +98,7 @@ public class InputArea extends VBox {
         switchLabel = new Label("Facts");
         switchLabel.prefWidthProperty().bind(widthProperty().divide(3));
         switchLabel.prefHeightProperty().bind(heightProperty().divide(2));
-        switchLabel.setOnMouseClicked(event ->
-                fireOnInformationTypeSelected());
+        switchLabel.setOnMouseClicked(event -> fireOnInformationTypeSelected());
         return switchLabel;
     }
 
