@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -31,9 +32,10 @@ public class InputArea extends VBox {
 
     private Button createSearchButton() {
         Objects.requireNonNull(queryField, "Query field must be made before the button");
-        Button searchButton = new Button("\u2315");
-        searchButton.setPrefWidth(80);
-        searchButton.setRotate(-90);
+        Button searchButton = new Button();
+        Label searchButtonLabel = new Label("\u2315");
+        searchButton.setGraphic(searchButtonLabel);
+        searchButtonLabel.setRotate(-90);
         searchButton.disableProperty().bind(searchEnabled.not());
         searchButton.setOnAction(event -> fireOnAlbumTitleSpecified());
         return searchButton;
