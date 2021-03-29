@@ -3,6 +3,7 @@ package edu.bsu.cs222.spotifycompanion.model;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.gson.JsonObject;
 import com.wrapper.spotify.model_objects.AbstractModelObject;
+import com.wrapper.spotify.model_objects.specification.AlbumSimplified;
 import com.wrapper.spotify.model_objects.specification.Recommendations;
 import com.wrapper.spotify.model_objects.specification.Track;
 
@@ -13,11 +14,13 @@ import java.util.Objects;
 public class AlbumRecommendations extends AbstractModelObject {
 
     private final Track[] tracks;
+    private final AlbumSimplified[] albums;
 
     private AlbumRecommendations(final Builder builder) {
         super(builder);
 
         this.tracks = builder.tracks;
+        this.albums = getAlbumSimplifiedsFromTracks();
     }
 
 
@@ -26,8 +29,16 @@ public class AlbumRecommendations extends AbstractModelObject {
         return "tracks = " + Arrays.toString(tracks);
     }
 
-    public Track[] getTracks() {
-        return tracks;
+    public AlbumSimplified[] getAlbums() {
+        return albums;
+    }
+
+    private AlbumSimplified[] getAlbumSimplifiedsFromTracks(){
+        AlbumSimplified[] albumSimples = new AlbumSimplified[tracks.length];
+        for (int i = 0; i < tracks.length; i++) {
+            albumSimples[i] = tracks[i].getAlbum();
+        }
+        return albumSimples;
     }
 
     @Override
