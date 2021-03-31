@@ -3,6 +3,7 @@ package edu.bsu.cs222.spotifycompanion.gui;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -47,18 +48,21 @@ public class AlbumRecommendationsUI extends VBox {
         return stringBuilder.toString().trim();
     }
 
-    private GridPane formatGrid() {
+    private ScrollPane formatGrid() {
         for (int i = 0; i < 2; i++) {
             ColumnConstraints column = new ColumnConstraints(100);
             grid.getColumnConstraints().add(column);
         }
         grid.setHgap(10);
         grid.setVgap(10);
-        for (int i = 0; i <= 5; i++) {
+        for (int i = 0; i <= 11; i++) {
             grid.add(new Text("#" + i), 0, i);
             grid.add(new Text(("album")), 1, i);
         }
-        return grid;
+        ScrollPane pane = new ScrollPane();
+        pane.setContent(grid);
+        pane.setPrefHeight(285);
+        return pane;
     }
 
 }
