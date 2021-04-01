@@ -1,32 +1,30 @@
 package edu.bsu.cs222.spotifycompanion.model;
 
 import com.wrapper.spotify.model_objects.specification.Album;
-import com.wrapper.spotify.model_objects.specification.ArtistSimplified;
-
-import java.util.Objects;
 
 public class RecommendationSeedsGenerator {
 
-    private final ArtistSimplified[] artists;
-
-    public RecommendationSeedsGenerator(Album album) {
-        this.artists = Objects.requireNonNull(album).getArtists();
-    }
-
-    public String generateArtistsSeed() {
+    public String generateArtistsSeed(Album album) {
         StringBuilder artistsSeed = new StringBuilder();
-        for (int i = 0; i < artists.length; i++) {
-            artistsSeed.append(formatArtistIdAtIndex(i));
+        for (int i = 0; i < album.getArtists().length; i++) {
+            if (i > 0) {
+                artistsSeed.append(',');
+            }
+            artistsSeed.append(album.getArtists()[i].getId());
         }
         return artistsSeed.toString();
     }
 
-    private String formatArtistIdAtIndex(int index) {
-        if (index >= 1) {
-            return "," + artists[index].getId();
-        } else {
-            return artists[index].getId();
+    public String generateTracksSeed(Album album) {
+        StringBuilder tracksSeed = new StringBuilder();
+        for (int i = 0; i < album.getTracks().getTotal() - album.getArtists().length; i++) {
+            if (i > 0) {
+                tracksSeed.append(',');
+            }
+            tracksSeed.append(album.getTracks().getItems()[i].getId());
         }
+        return tracksSeed.toString();
     }
+
 
 }
