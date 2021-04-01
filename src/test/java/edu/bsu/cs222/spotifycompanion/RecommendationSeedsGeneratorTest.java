@@ -17,7 +17,8 @@ import java.util.stream.Collectors;
 public class RecommendationSeedsGeneratorTest {
 
     @ParameterizedTest
-    @CsvSource(delimiter = '|', value = {"4MzJMcHQBl9SIYSjwWn8QW | testalbum.json"})
+    @CsvSource(delimiter = '|', value = {"4MzJMcHQBl9SIYSjwWn8QW | testalbum.json",
+    "3nFkdlSjzX9mRTtwJOzDYB,5K4W6rqBFWDnAN6FQUkS6x | testalbum_multiartist.json"})
     public void testGenerateArtistSeeds(String expected, String fileName) {
         Album testAlbum = createTestAlbum(fileName);
         RecommendationSeedsGenerator seedsGenerator = new RecommendationSeedsGenerator(testAlbum);
