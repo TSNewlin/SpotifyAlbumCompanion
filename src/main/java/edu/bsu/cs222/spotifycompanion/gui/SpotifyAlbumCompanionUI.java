@@ -11,7 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -27,6 +27,7 @@ public class SpotifyAlbumCompanionUI extends Application {
     private final TracksView tracksView = new TracksView();
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
     private final AlbumRecommendationsUI albumRecommendationsUI = new AlbumRecommendationsUI();
+    private final GridPane gridPane = new GridPane();
 
 
     @Override
@@ -38,9 +39,13 @@ public class SpotifyAlbumCompanionUI extends Application {
     }
 
     private Parent createUI() {
-        VBox informationUI = createInformationVBox();
+        ScrollPane bottomArea = setUpBottomArea();
         VBox recommendedUI = createRecommendedVBox();
-        return new HBox(informationUI, recommendedUI);
+        VBox informationUI = createInformationVBox();
+        gridPane.add(informationUI, 0, 0);
+        gridPane.add(bottomArea, 0, 1);
+        gridPane.add(recommendedUI, 1, 0, 1, 2);
+        return gridPane;
     }
 
     private VBox createRecommendedVBox() {
@@ -61,8 +66,7 @@ public class SpotifyAlbumCompanionUI extends Application {
                 changeSeenOutput(informationType);
             }
         });
-        ScrollPane bottomArea = setUpBottomArea();
-        return new VBox(inputArea, bottomArea);
+        return new VBox(inputArea);
     }
 
     private ScrollPane setUpBottomArea() {
