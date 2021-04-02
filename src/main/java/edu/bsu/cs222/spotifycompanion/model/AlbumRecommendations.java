@@ -65,12 +65,8 @@ public class AlbumRecommendations extends AbstractModelObject {
         @Override
         public AlbumRecommendations createModelObject(JsonObject jsonObject) {
             Objects.requireNonNull(jsonObject);
-            return new AlbumRecommendations.Builder().setTracks(
-                    hasAndNotNull(jsonObject, "tracks")
-                    ? new Track.JsonUtil().createModelObjectArray(
-                            jsonObject.getAsJsonArray("tracks")
-                    ) : null)
-                    .build();
+            return new AlbumRecommendations.Builder().setTracks(hasAndNotNull(jsonObject, "tracks") ?
+                    new Track.JsonUtil().createModelObjectArray(jsonObject.getAsJsonArray("tracks")) : null).build();
         }
     }
 
