@@ -17,7 +17,7 @@ public class RecommendationSeedsGenerator {
 
     public String generateTracksSeed(Album album) {
         StringBuilder tracksSeed = new StringBuilder();
-        for (int i = 0; i < album.getTracks().getTotal() - album.getArtists().length; i++) {
+        for (int i = 0; i < 5 - album.getArtists().length; i++) {
             if (i > 0) {
                 tracksSeed.append(',');
             }
