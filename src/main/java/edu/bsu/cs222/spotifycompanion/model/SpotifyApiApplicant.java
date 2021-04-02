@@ -21,8 +21,7 @@ public class SpotifyApiApplicant {
 
     public AlbumRecommendations searchForRecommendations(Album album) throws SpotifyWebApiException {
         try {
-            AlbumRecommendationsRequest recommendationsRequest = new AlbumRecommendationsRequest
-                    .Builder(spotifyApi.getAccessToken()).limit(10).seed_artists(album.getArtists()[0].getId()).build();
+            AlbumRecommendationsRequest recommendationsRequest = setUpRecommendationsRequest(album);
             return recommendationsRequest.execute();
         } catch (ParseException | SpotifyWebApiException | IOException e) {
             throw new SpotifyWebApiException();
@@ -37,6 +36,14 @@ public class SpotifyApiApplicant {
         } catch (ParseException | SpotifyWebApiException | IOException e) {
             throw new SpotifyWebApiException();
         }
+    }
+
+    private AlbumRecommendationsRequest setUpRecommendationsRequest(Album album) {
+        RecommendationSeedsGenerator seedsGenerator = new RecommendationSeedsGenerator();
+        String artistsSeed = seedsGenerator.generateArtistsSeed(album);
+        String tracksSeed = seedsGenerator.generateTracksSeed(album);
+        return new AlbumRecommendationsRequest.Builder(spotifyApi.getAccessToken())
+                .limit(10).seed_artists(artistsSeed).seed_tracks(tracksSeed).build();
     }
 
     private String searchForAlbumSimplifiedID(String albumName) throws ParseException, SpotifyWebApiException,
