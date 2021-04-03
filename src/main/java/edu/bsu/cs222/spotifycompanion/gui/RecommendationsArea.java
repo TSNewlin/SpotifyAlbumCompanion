@@ -2,10 +2,11 @@ package edu.bsu.cs222.spotifycompanion.gui;
 
 import com.wrapper.spotify.model_objects.specification.AlbumSimplified;
 import edu.bsu.cs222.spotifycompanion.model.AlbumRecommendations;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -19,12 +20,14 @@ import static javafx.scene.layout.GridPane.getColumnIndex;
 
 public class RecommendationsArea extends VBox {
 
-    private final Label albumTitleLabel = new Label("(Your Album)");
+    private final Label albumTitleLabel = new Label();
     private final GridPane recommendedAlbumsGrid = new GridPane();
+    private final BooleanProperty searchRecommendationsEnabled = new SimpleBooleanProperty(false);
     private final List<RecommendationsArea.Listener> eventListeners = new ArrayList<>();
 
     public RecommendationsArea() {
         formatGrid();
+        configureSearchRecommendationsBinding();
         getChildren().addAll(setUpTopBar(), setUpScrollPane());
     }
 
@@ -58,6 +61,19 @@ public class RecommendationsArea extends VBox {
 
     }
 
+    private void configureSearchRecommendationsBinding() {
+        BooleanBinding albumTitleAvailableBinding = new BooleanBinding() {
+            {
+                bind(albumTitleLabel.textProperty());
+            }
+            @Override
+            protected boolean computeValue() {
+                return !albumTitleLabel.getText().isEmpty();
+            }
+        };
+        searchRecommendationsEnabled.bind(albumTitleAvailableBinding);
+    }
+
     private VBox setUpTopBar() {
         VBox topBar = new VBox();
         topBar.setAlignment(Pos.TOP_CENTER);
@@ -68,6 +84,7 @@ public class RecommendationsArea extends VBox {
 
     private Button setUpRecommendationsButton() {
         Button recommendationsButton = new Button("Search For Recommendations");
+        recommendationsButton.disableProperty().bind(searchRecommendationsEnabled.not());
         recommendationsButton.setOnAction(event -> fireOnRecommendationsButtonPressed());
         return recommendationsButton;
     }
