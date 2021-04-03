@@ -1,5 +1,6 @@
 package edu.bsu.cs222.spotifycompanion.gui;
 
+import com.wrapper.spotify.model_objects.specification.Album;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,15 +10,18 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 public class AlbumRecommendationsUI extends VBox {
 
     private final VBox header = new VBox();
     private final Label albumTitleLbl = new Label("(Your Album)");
     private final GridPane grid = new GridPane();
+    private final List<AlbumRecommendationsUI.Listener> eventListeners = new ArrayList<>();
 
     public AlbumRecommendationsUI() {
-        setVisible(true);
-        setManaged(true);
         getChildren().addAll(setUpRecommendationsHeader(), formatGrid());
     }
 
@@ -29,7 +33,9 @@ public class AlbumRecommendationsUI extends VBox {
     }
 
     private Button getRecommendationsButton() {
-        return new Button("Find Album Recommendations");
+        Button recommendationsButton = new Button("Search For Recommendations");
+        recommendationsButton.setOnAction(event -> fireOnRecommendationsButtonPressed());
+        return recommendationsButton;
     }
 
     public void addAlbumTitle(String title) {
@@ -63,6 +69,21 @@ public class AlbumRecommendationsUI extends VBox {
         pane.setContent(grid);
         pane.setPrefHeight(285);
         return pane;
+    }
+
+    public interface Listener {
+        void onRecommendationsButtonPressed();
+    }
+
+    public void addListener(Listener listener) {
+        Objects.requireNonNull(listener);
+        eventListeners.add(listener);
+    }
+
+    private void fireOnRecommendationsButtonPressed() {
+        for (Listener eventListener : eventListeners) {
+            eventListener.onRecommendationsButtonPressed();
+        }
     }
 
 }
