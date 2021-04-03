@@ -2,9 +2,10 @@ package edu.bsu.cs222.spotifycompanion.model;
 
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
-import com.wrapper.spotify.model_objects.specification.*;
+import com.wrapper.spotify.model_objects.specification.Album;
+import com.wrapper.spotify.model_objects.specification.AlbumSimplified;
+import com.wrapper.spotify.model_objects.specification.Paging;
 import com.wrapper.spotify.requests.data.albums.GetAlbumRequest;
-import com.wrapper.spotify.requests.data.browse.GetRecommendationsRequest;
 import com.wrapper.spotify.requests.data.search.simplified.SearchAlbumsRequest;
 import org.apache.hc.core5.http.ParseException;
 
@@ -18,10 +19,9 @@ public class SpotifyApiApplicant {
         this.spotifyApi = new SpotifyApiInitializer().initializeApi();
     }
 
-    public Recommendations searchForRecommendations(Album album) throws SpotifyWebApiException{
+    public AlbumRecommendations searchForRecommendations(Album album) throws SpotifyWebApiException {
         try {
-            GetRecommendationsRequest recommendationsRequest = spotifyApi.getRecommendations().limit(10)
-                    .seed_artists(getAllAlbumArtistsIds(album)).build();
+            AlbumRecommendationsRequest recommendationsRequest = setUpRecommendationsRequest(album);
             return recommendationsRequest.execute();
         } catch (ParseException | SpotifyWebApiException | IOException e) {
             throw new SpotifyWebApiException();
@@ -38,12 +38,12 @@ public class SpotifyApiApplicant {
         }
     }
 
-    private String getAllAlbumArtistsIds(Album album) {
-        StringBuilder artistsIds = new StringBuilder();
-        for (ArtistSimplified a : album.getArtists()) {
-            artistsIds.append(String.format("%s,", a.getId()));
-        }
-        return artistsIds.toString();
+    private AlbumRecommendationsRequest setUpRecommendationsRequest(Album album) {
+        RecommendationSeedsGenerator seedsGenerator = new RecommendationSeedsGenerator();
+        String artistsSeed = seedsGenerator.generateArtistsSeed(album);
+        String tracksSeed = seedsGenerator.generateTracksSeed(album);
+        return new AlbumRecommendationsRequest.Builder(spotifyApi.getAccessToken())
+                .limit(10).seed_artists(artistsSeed).seed_tracks(tracksSeed).build();
     }
 
     private String searchForAlbumSimplifiedID(String albumName) throws ParseException, SpotifyWebApiException,
