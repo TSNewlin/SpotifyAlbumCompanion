@@ -6,9 +6,13 @@ import edu.bsu.cs222.spotifycompanion.model.InformationType;
 import edu.bsu.cs222.spotifycompanion.model.SpotifyApiApplicant;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -39,10 +43,20 @@ public class SpotifyAlbumCompanionUI extends Application {
         ScrollPane bottomArea = setUpBottomArea();
         VBox recommendedUI = createRecommendedVBox();
         VBox informationUI = createInformationVBox();
+        VBox spotifyLogo = createSpotifyLogoImage();
+        spotifyLogo.setPadding(new Insets(30));
+        spotifyLogo.setAlignment(Pos.CENTER_RIGHT);
         gridPane.add(informationUI, 0, 0);
         gridPane.add(bottomArea, 0, 1);
         gridPane.add(recommendedUI, 1, 0, 1, 2);
+        gridPane.add(spotifyLogo, 1, 2);
         return gridPane;
+    }
+
+    private VBox createSpotifyLogoImage() {
+        Image image = new Image("Spotify_Logo_CMYK_Green (Resized).png");
+        ImageView imageView = new ImageView(image);
+        return new VBox(imageView);
     }
 
     private VBox createRecommendedVBox() {
