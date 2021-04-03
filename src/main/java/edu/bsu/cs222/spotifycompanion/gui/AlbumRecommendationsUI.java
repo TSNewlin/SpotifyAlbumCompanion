@@ -1,6 +1,7 @@
 package edu.bsu.cs222.spotifycompanion.gui;
 
-import com.wrapper.spotify.model_objects.specification.Album;
+import com.wrapper.spotify.model_objects.specification.AlbumSimplified;
+import edu.bsu.cs222.spotifycompanion.model.AlbumRecommendations;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static javafx.scene.layout.GridPane.getColumnIndex;
+
 public class AlbumRecommendationsUI extends VBox {
 
     private final VBox header = new VBox();
@@ -23,6 +26,14 @@ public class AlbumRecommendationsUI extends VBox {
 
     public AlbumRecommendationsUI() {
         getChildren().addAll(setUpRecommendationsHeader(), formatGrid());
+    }
+
+    public void show(AlbumRecommendations recommendations) {
+        grid.getChildren().removeIf(node -> getColumnIndex(node) == 0);
+        AlbumSimplified[] albums = recommendations.getAlbums();
+        for (int i = 0; i < albums.length; i++) {
+            grid.add(new Text(albums[i].getName()), 0, i);
+        }
     }
 
     private VBox setUpRecommendationsHeader() {
@@ -61,10 +72,6 @@ public class AlbumRecommendationsUI extends VBox {
         }
         grid.setHgap(10);
         grid.setVgap(10);
-        for (int i = 0; i <= 11; i++) {
-            grid.add(new Text("#" + i), 0, i);
-            grid.add(new Text(("album")), 1, i);
-        }
         ScrollPane pane = new ScrollPane();
         pane.setContent(grid);
         pane.setPrefHeight(285);

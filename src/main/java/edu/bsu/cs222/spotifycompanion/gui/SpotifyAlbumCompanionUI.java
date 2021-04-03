@@ -122,13 +122,14 @@ public class SpotifyAlbumCompanionUI extends Application {
     }
 
     private void searchForRecommendationsOf(Album album) {
-        executor.execute(() -> {
+        executor.execute(() -> Platform.runLater(() ->{
             try{
                 AlbumRecommendations recommendations = apiApplicant.searchForRecommendations(album);
+                albumRecommendationsUI.show(recommendations);
             } catch (SpotifyWebApiException exception) {
                 spotifyWebApiExceptionAlert.showAlert(exception);
             }
-        });
+        }));
     }
 
     private void addRecommendedAlbumTitle(String albumTitle) {
