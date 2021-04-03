@@ -24,7 +24,7 @@ public class SpotifyAlbumCompanionUI extends Application {
     private final FactsView factsView = new FactsView();
     private final TracksView tracksView = new TracksView();
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
-    private final AlbumRecommendationsUI albumRecommendationsUI = new AlbumRecommendationsUI();
+    private final RecommendationsArea recommendationsArea = new RecommendationsArea();
     private final GridPane gridPane = new GridPane();
     private final SpotifyWebApiExceptionAlert spotifyWebApiExceptionAlert = new SpotifyWebApiExceptionAlert();
     private SpotifyApiApplicant apiApplicant;
@@ -51,8 +51,8 @@ public class SpotifyAlbumCompanionUI extends Application {
     }
 
     private VBox createRecommendedVBox() {
-        albumRecommendationsUI.addListener(() -> searchForRecommendationsOf(foundAlbum));
-        return new VBox(albumRecommendationsUI);
+        recommendationsArea.addListener(() -> searchForRecommendationsOf(foundAlbum));
+        return new VBox(recommendationsArea);
     }
 
     private VBox createInformationVBox() {
@@ -125,7 +125,7 @@ public class SpotifyAlbumCompanionUI extends Application {
         executor.execute(() -> Platform.runLater(() ->{
             try{
                 AlbumRecommendations recommendations = apiApplicant.searchForRecommendations(album);
-                albumRecommendationsUI.show(recommendations);
+                recommendationsArea.show(recommendations);
             } catch (SpotifyWebApiException exception) {
                 spotifyWebApiExceptionAlert.showAlert(exception);
             }
@@ -133,7 +133,7 @@ public class SpotifyAlbumCompanionUI extends Application {
     }
 
     private void addRecommendedAlbumTitle(String albumTitle) {
-        albumRecommendationsUI.addAlbumTitle(albumTitle);
+        recommendationsArea.addAlbumTitle(albumTitle);
     }
 
 }
