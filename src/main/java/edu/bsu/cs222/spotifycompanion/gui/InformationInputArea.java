@@ -16,14 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class InputArea extends VBox {
+public class InformationInputArea extends VBox {
 
     private final List<Listener> eventListeners = new ArrayList<>();
     private final BooleanProperty searchEnabled = new SimpleBooleanProperty(false);
     private final FilterSwitch filterSwitch = new FilterSwitch();
     private final TextField searchBar = new TextField();
 
-    public InputArea() {
+    public InformationInputArea() {
         Node queryArea = setUpInputArea();
         getChildren().add(queryArea);
         setUpFilterSwitchEvents();

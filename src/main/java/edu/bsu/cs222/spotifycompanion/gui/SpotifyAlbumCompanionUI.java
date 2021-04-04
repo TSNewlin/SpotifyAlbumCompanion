@@ -75,8 +75,8 @@ public class SpotifyAlbumCompanionUI extends Application {
     }
 
     private VBox setUpInformationInputArea() {
-        InputArea inputArea = new InputArea();
-        inputArea.addListener(new InputArea.Listener() {
+        InformationInputArea informationInputArea = new InformationInputArea();
+        informationInputArea.addListener(new InformationInputArea.Listener() {
             @Override
             public void onAlbumTitleSpecified(String albumTitle) {
                 querySpotifyForAlbum(albumTitle);
@@ -87,7 +87,7 @@ public class SpotifyAlbumCompanionUI extends Application {
                 changeSeenOutput(informationType);
             }
         });
-        return new VBox(inputArea);
+        return new VBox(informationInputArea);
     }
 
     private VBox setUpSpotifyLogoImage() {
