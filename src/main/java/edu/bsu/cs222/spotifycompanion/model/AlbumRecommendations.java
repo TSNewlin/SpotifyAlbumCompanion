@@ -4,13 +4,12 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.gson.JsonObject;
 import com.wrapper.spotify.model_objects.AbstractModelObject;
 import com.wrapper.spotify.model_objects.specification.AlbumSimplified;
-import com.wrapper.spotify.model_objects.specification.Recommendations;
 import com.wrapper.spotify.model_objects.specification.Track;
 
 import java.util.Arrays;
 import java.util.Objects;
 
-@JsonDeserialize(builder = Recommendations.Builder.class)
+@JsonDeserialize(builder = AlbumRecommendations.Builder.class)
 public class AlbumRecommendations extends AbstractModelObject {
 
     private final Track[] tracks;
@@ -33,7 +32,7 @@ public class AlbumRecommendations extends AbstractModelObject {
         return albums;
     }
 
-    private AlbumSimplified[] getAlbumSimplifiedsFromTracks(){
+    private AlbumSimplified[] getAlbumSimplifiedsFromTracks() {
         AlbumSimplified[] albumSimples = new AlbumSimplified[tracks.length];
         for (int i = 0; i < tracks.length; i++) {
             albumSimples[i] = tracks[i].getAlbum();

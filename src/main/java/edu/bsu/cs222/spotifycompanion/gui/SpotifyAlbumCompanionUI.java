@@ -107,6 +107,7 @@ public class SpotifyAlbumCompanionUI extends Application {
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(innerScrollBox);
         scrollPane.setPrefHeight(300);
+        scrollPane.setPrefWidth(300);
         return scrollPane;
     }
 

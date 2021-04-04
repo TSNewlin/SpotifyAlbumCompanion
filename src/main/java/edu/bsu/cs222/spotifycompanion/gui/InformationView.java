@@ -14,7 +14,6 @@ public abstract class InformationView extends GridPane {
         setVisible(false);
         setPrefHeight(300);
         setVgap(10);
-        setHgap(20);
         for (int i = 0; i < 2; i++) {
             ColumnConstraints column = new ColumnConstraints(150);
             getColumnConstraints().add(column);
