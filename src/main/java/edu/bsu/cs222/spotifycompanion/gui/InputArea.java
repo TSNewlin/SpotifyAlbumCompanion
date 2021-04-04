@@ -20,18 +20,63 @@ public class InputArea extends VBox {
 
     private final List<Listener> eventListeners = new ArrayList<>();
     private final BooleanProperty searchEnabled = new SimpleBooleanProperty(false);
-    private TextField queryField;
-    private FilterSwitch filterSwitch;
+    private final FilterSwitch filterSwitch = new FilterSwitch();
+    private final TextField searchBar = new TextField();
 
     public InputArea() {
-        Node queryArea = createInputArea();
-        getChildren().addAll(queryArea);
+        Node queryArea = setUpInputArea();
+        getChildren().add(queryArea);
+        setUpFilterSwitchEvents();
         configureSearchEnablingBindingProperty();
         setAlignment(Pos.CENTER);
     }
 
+    private Node setUpInputArea() {
+        HBox innerQueryArea = setUpSearchArea();
+        HBox inputBox = new HBox(35);
+        inputBox.setPadding(new Insets(5, 0, 5, 0));
+        inputBox.getChildren().addAll(innerQueryArea, filterSwitch);
+        return inputBox;
+    }
+
+    private void setUpFilterSwitchEvents() {
+        Node LabelNode, ButtonNode;
+        LabelNode = filterSwitch.getChildren().get(0);
+        ButtonNode = filterSwitch.getChildren().get(1);
+        LabelNode.setOnMouseClicked(event -> fireOnInformationTypeSelected());
+        ButtonNode.setOnMouseClicked(event -> fireOnInformationTypeSelected());
+    }
+
+    private void configureSearchEnablingBindingProperty() {
+        BooleanBinding textAvailabilityBinding = new BooleanBinding() {
+            {
+                bind(searchBar.textProperty());
+            }
+
+            @Override
+            protected boolean computeValue() {
+                return !searchBar.getText().trim().isEmpty();
+            }
+        };
+        searchEnabled.bind(textAvailabilityBinding);
+    }
+
+    private HBox setUpSearchArea() {
+        setUpSearchBar();
+        Button searchButton = createSearchButton();
+        HBox searchAreaBox = new HBox();
+        searchAreaBox.getChildren().addAll(searchBar, searchButton);
+        return searchAreaBox;
+    }
+
+    private void setUpSearchBar() {
+        searchBar.setOnAction(event -> fireOnAlbumTitleSpecified());
+        searchBar.setPromptText("Enter an album name.");
+        searchBar.setPrefWidth(220);
+    }
+
     private Button createSearchButton() {
-        Objects.requireNonNull(queryField, "Query field must be made before the button");
+        Objects.requireNonNull(searchBar, "Query field must be made before the button");
         Button searchButton = new Button();
         Label searchButtonLabel = new Label("\u2315");
         searchButton.setGraphic(searchButtonLabel);
@@ -39,45 +84,6 @@ public class InputArea extends VBox {
         searchButton.disableProperty().bind(searchEnabled.not());
         searchButton.setOnAction(event -> fireOnAlbumTitleSpecified());
         return searchButton;
-    }
-
-    private void configureSearchEnablingBindingProperty() {
-        BooleanBinding textAvailabilityBinding = new BooleanBinding() {
-            {
-                bind(queryField.textProperty());
-            }
-
-            @Override
-            protected boolean computeValue() {
-                return !queryField.getText().trim().isEmpty();
-            }
-        };
-        searchEnabled.bind(textAvailabilityBinding);
-    }
-
-    private Node createInputArea() {
-        Node LabelNode, ButtonNode;
-        HBox innerQueryArea = createInnerInputArea();
-        filterSwitch = new FilterSwitch();
-        LabelNode = filterSwitch.getChildren().get(0);
-        ButtonNode = filterSwitch.getChildren().get(1);
-        LabelNode.setOnMouseClicked(event -> fireOnInformationTypeSelected());
-        ButtonNode.setOnMouseClicked(event -> fireOnInformationTypeSelected());
-        HBox inputBox = new HBox(35);
-        inputBox.setPadding(new Insets(5, 0, 5, 0));
-        inputBox.getChildren().addAll(innerQueryArea, filterSwitch);
-        return inputBox;
-    }
-
-    private HBox createInnerInputArea() {
-        queryField = new TextField();
-        queryField.setOnAction(event -> fireOnAlbumTitleSpecified());
-        queryField.setPromptText("Enter an album name.");
-        queryField.setPrefWidth(220);
-        Button searchButton = createSearchButton();
-        HBox innerQueryAreaBox = new HBox();
-        innerQueryAreaBox.getChildren().addAll(queryField, searchButton);
-        return innerQueryAreaBox;
     }
 
     public interface Listener {
@@ -91,7 +97,7 @@ public class InputArea extends VBox {
     }
 
     private void fireOnAlbumTitleSpecified() {
-        String albumTitle = queryField.getText();
+        String albumTitle = searchBar.getText();
         for (Listener eventListener : eventListeners) {
             eventListener.onAlbumTitleSpecified(albumTitle);
         }
