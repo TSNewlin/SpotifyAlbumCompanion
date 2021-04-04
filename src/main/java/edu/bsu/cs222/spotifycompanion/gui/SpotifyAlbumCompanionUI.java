@@ -2,8 +2,10 @@ package edu.bsu.cs222.spotifycompanion.gui;
 
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.specification.Album;
+import edu.bsu.cs222.spotifycompanion.model.AlbumRecommendations;
 import edu.bsu.cs222.spotifycompanion.model.InformationType;
 import edu.bsu.cs222.spotifycompanion.model.SpotifyApiApplicant;
+import edu.bsu.cs222.spotifycompanion.model.SpotifyApiInitializer;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -26,13 +28,16 @@ public class SpotifyAlbumCompanionUI extends Application {
     private final FactsView factsView = new FactsView();
     private final TracksView tracksView = new TracksView();
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
-    private final AlbumRecommendationsUI albumRecommendationsUI = new AlbumRecommendationsUI();
+    private final RecommendationsArea recommendationsArea = new RecommendationsArea();
     private final GridPane gridPane = new GridPane();
     private final SpotifyWebApiExceptionAlert spotifyWebApiExceptionAlert = new SpotifyWebApiExceptionAlert();
+    private SpotifyApiApplicant apiApplicant;
+    private Album foundAlbum;
 
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws SpotifyWebApiException {
+        this.apiApplicant = new SpotifyApiApplicant(new SpotifyApiInitializer().initializeApi());
         Parent ui = createUI();
         primaryStage.setScene(new Scene(ui));
         primaryStage.setTitle("Album Companion");
@@ -60,7 +65,8 @@ public class SpotifyAlbumCompanionUI extends Application {
     }
 
     private VBox createRecommendedVBox() {
-        return new VBox(albumRecommendationsUI);
+        recommendationsArea.addListener(() -> searchForRecommendationsOf(foundAlbum));
+        return new VBox(recommendationsArea);
     }
 
     private VBox createInformationVBox() {
@@ -119,10 +125,21 @@ public class SpotifyAlbumCompanionUI extends Application {
     private void querySpotifyForAlbum(String albumTitle) {
         executor.execute(() -> Platform.runLater(() -> {
             try {
-                SpotifyApiApplicant searcher = new SpotifyApiApplicant();
-                Album album = searcher.searchForAlbum(albumTitle);
+                Album album = apiApplicant.searchForAlbum(albumTitle);
                 factsView.show(album);
                 tracksView.show(album);
+                this.foundAlbum = album;
+            } catch (SpotifyWebApiException exception) {
+                spotifyWebApiExceptionAlert.showAlert(exception);
+            }
+        }));
+    }
+
+    private void searchForRecommendationsOf(Album album) {
+        executor.execute(() -> Platform.runLater(() ->{
+            try{
+                AlbumRecommendations recommendations = apiApplicant.searchForRecommendations(album);
+                recommendationsArea.show(recommendations);
             } catch (SpotifyWebApiException exception) {
                 spotifyWebApiExceptionAlert.showAlert(exception);
             }
@@ -130,7 +147,7 @@ public class SpotifyAlbumCompanionUI extends Application {
     }
 
     private void addRecommendedAlbumTitle(String albumTitle) {
-        albumRecommendationsUI.addAlbumTitle(albumTitle);
+        recommendationsArea.addAlbumTitle(albumTitle);
     }
 
 }

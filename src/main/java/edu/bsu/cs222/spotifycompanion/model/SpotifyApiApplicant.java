@@ -15,8 +15,8 @@ public class SpotifyApiApplicant {
 
     private final SpotifyApi spotifyApi;
 
-    public SpotifyApiApplicant() throws SpotifyWebApiException {
-        this.spotifyApi = new SpotifyApiInitializer().initializeApi();
+    public SpotifyApiApplicant(SpotifyApi spotifyApi) {
+        this.spotifyApi = spotifyApi;
     }
 
     public AlbumRecommendations searchForRecommendations(Album album) throws SpotifyWebApiException {
