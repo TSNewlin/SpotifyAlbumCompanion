@@ -17,17 +17,29 @@ public class RecommendationSeedsGenerator {
 
     public String generateTracksSeed(Album album) {
         StringBuilder tracksSeed = new StringBuilder();
-        if (album.getTracks().getTotal() <= album.getArtists().length) {
-            return tracksSeed.append(album.getTracks().getItems()[0].getId()).toString();
+        if (album.getTracks().getTotal() == 1) {
+            return album.getTracks().getItems()[0].getId();
         }
-        for (int i = 0; i < 5 - album.getArtists().length; i++) {
-            if (i > 0) {
-                tracksSeed.append(',');
+        if (!totalTracksAndArtistsExceedsSeedLimit(album)) {
+            for (int i = 0; i < album.getTracks().getTotal(); i++) {
+                if (i > 0) {
+                    tracksSeed.append(',');
+                }
+                tracksSeed.append(album.getTracks().getItems()[i].getId());
             }
-            tracksSeed.append(album.getTracks().getItems()[i].getId());
+        } else {
+            for (int i = 0; i < 5 - album.getArtists().length; i++) {
+                if (i > 0) {
+                    tracksSeed.append(',');
+                }
+                tracksSeed.append(album.getTracks().getItems()[i].getId());
+            }
         }
         return tracksSeed.toString();
     }
 
+    private Boolean totalTracksAndArtistsExceedsSeedLimit(Album album) {
+        return album.getArtists().length + album.getTracks().getTotal() > 5;
+    }
 
 }

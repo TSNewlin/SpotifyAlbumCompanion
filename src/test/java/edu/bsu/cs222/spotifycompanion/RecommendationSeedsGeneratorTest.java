@@ -19,7 +19,7 @@ public class RecommendationSeedsGeneratorTest {
     private final RecommendationSeedsGenerator testSeedGenerator = new RecommendationSeedsGenerator();
 
     @ParameterizedTest
-    @CsvSource(delimiter = '|', value = {"4MzJMcHQBl9SIYSjwWn8QW | testAlbum.json",
+    @CsvSource(delimiter = '|', value = {"4MzJMcHQBl9SIYSjwWn8QW | testalbum.json",
             "3nFkdlSjzX9mRTtwJOzDYB,5K4W6rqBFWDnAN6FQUkS6x | testalbum_multiartist.json"})
     public void testGenerateArtistSeed(String artistsSeed, String fileName) {
         Album testAlbum = createTestAlbum(fileName);
@@ -30,7 +30,8 @@ public class RecommendationSeedsGeneratorTest {
     @ParameterizedTest
     @CsvSource(delimiter = '|', value = {
             "73qU8HnehMJsZoNQo6Y05o,5cmOlYycTDBTY8k8nHfrLf,7n0tr9KRPVDQ4Bo7ah8K45,5wCNFck4zVosUPpn7tcjZE | testalbum.json",
-            "3Osd3Yf8K73aj4ySn6LrvK,08T26i7SErk6jCDTW7uUFI,4Li2WHPkuyCdtmokzW2007 | testalbum_multiartist.json"
+            "3Osd3Yf8K73aj4ySn6LrvK,08T26i7SErk6jCDTW7uUFI,4Li2WHPkuyCdtmokzW2007 | testalbum_multiartist.json",
+            "5LjSxAIKwyZvQqJ04ZQ0Da,3DUcaEvPO72PijivCjtZcU,2ChvdpARUc5va0hLi51Nmp | testep.json"
     })
     public void testGenerateTracksSeed(String tracksSeed, String fileName) {
         Album testAlbum = createTestAlbum(fileName);
