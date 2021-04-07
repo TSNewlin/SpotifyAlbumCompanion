@@ -40,18 +40,26 @@ public class FilterSwitch extends HBox {
     public void changeSelectedFilter() {
         Platform.runLater(() -> {
             if (selectedFilterType.equals(InformationType.FACTS)) {
-                selectedFilterType = InformationType.TRACKS;
-                switchLabel.setText("Facts");
-                switchButton.setText("Tracks");
-                switchButton.toFront();
+                changeSelectedFilterToTracks();
             }
             else {
-                selectedFilterType = InformationType.FACTS;
-                switchLabel.setText("Tracks");
-                switchButton.setText("Facts");
-                switchLabel.toFront();
+                changeSelectedFilterToFacts();
             }
         });
+    }
+
+    private void changeSelectedFilterToTracks() {
+        selectedFilterType = InformationType.TRACKS;
+        switchLabel.setText("Facts");
+        switchButton.setText("Tracks");
+        switchButton.toFront();
+    }
+
+    private void changeSelectedFilterToFacts() {
+        selectedFilterType = InformationType.FACTS;
+        switchLabel.setText("Tracks");
+        switchButton.setText("Facts");
+        switchLabel.toFront();
     }
 
     public InformationType getSelectedFilterType() {
