@@ -16,22 +16,22 @@ public class FilterSwitch extends HBox {
     public FilterSwitch() {
         configureSwitchLabel();
         configureSwitchButton();
-        setPrefWidth(80);
-        getChildren().addAll(switchLabel, switchButton);
+        setPrefWidth(100);
+        getChildren().addAll(switchButton, switchLabel);
         setStyle("-fx-background-color: grey; -fx-text-fill:black; -fx-background-radius: 4;");
         setAlignment(Pos.CENTER_LEFT);
         switchLabel.setAlignment(Pos.CENTER);
     }
 
     private void configureSwitchLabel() {
-        switchLabel = new Label("Facts");
+        switchLabel = new Label("Tracks");
         switchLabel.prefWidthProperty().bind(widthProperty().divide(2));
         switchLabel.prefHeightProperty().bind(heightProperty().divide(2));
         switchLabel.setOnMouseClicked(event -> changeSelectedFilter());
     }
 
     private void configureSwitchButton() {
-        switchButton = new Button();
+        switchButton = new Button("Facts");
         switchButton.prefWidthProperty().bind(widthProperty().divide(2));
         switchButton.prefHeightProperty().bind(heightProperty().divide(2));
         switchButton.setOnMouseClicked(event -> changeSelectedFilter());
@@ -41,13 +41,15 @@ public class FilterSwitch extends HBox {
         Platform.runLater(() -> {
             if (selectedFilterType.equals(InformationType.FACTS)) {
                 selectedFilterType = InformationType.TRACKS;
-                switchLabel.setText("Tracks");
-                switchLabel.toFront();
+                switchLabel.setText("Facts");
+                switchButton.setText("Tracks");
+                switchButton.toFront();
             }
             else {
                 selectedFilterType = InformationType.FACTS;
-                switchLabel.setText("Facts");
-                switchButton.toFront();
+                switchLabel.setText("Tracks");
+                switchButton.setText("Facts");
+                switchLabel.toFront();
             }
         });
     }
