@@ -7,7 +7,7 @@ import com.wrapper.spotify.model_objects.specification.TrackSimplified;
 
 public class RecommendationSeedsGenerator {
 
-    private final int SEEDS_LIMIT = 5;
+    private static final int SEEDS_LIMIT = 5;
     private ArtistSimplified[] artists;
     private Paging<TrackSimplified> tracks;
 
@@ -26,16 +26,17 @@ public class RecommendationSeedsGenerator {
     public String generateTracksSeed(Album album) {
         this.artists = album.getArtists();
         this.tracks = album.getTracks();
-        return totalTracksAndArtistsExceedsSeedLimit() ?
-                createTracksSeedWithTotalAllowedIds(SEEDS_LIMIT - album.getArtists().length) :
-                createTracksSeedWithTotalAllowedIds(album.getTracks().getTotal());
+        if (sumOfAllArtistsAndAllTracksExceedsSeedLimit()) {
+            return generateTracksSeedWithTotalAllowedTracksIds(SEEDS_LIMIT - artists.length);
+        }
+        return generateTracksSeedWithTotalAllowedTracksIds(tracks.getTotal());
     }
 
-    private Boolean totalTracksAndArtistsExceedsSeedLimit() {
+    private Boolean sumOfAllArtistsAndAllTracksExceedsSeedLimit() {
         return artists.length + tracks.getTotal() > SEEDS_LIMIT;
     }
 
-    private String createTracksSeedWithTotalAllowedIds(int totalAllowedTrackIds) {
+    private String generateTracksSeedWithTotalAllowedTracksIds(int totalAllowedTrackIds) {
         TrackSimplified[] tracksArray = tracks.getItems();
         StringBuilder tracksSeed = new StringBuilder(tracksArray[0].getId());
         for (int i = 1; i < totalAllowedTrackIds; i++) {
