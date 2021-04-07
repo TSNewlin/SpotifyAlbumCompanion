@@ -1,8 +1,12 @@
 package edu.bsu.cs222.spotifycompanion.model;
 
 import com.wrapper.spotify.model_objects.specification.Album;
+import com.wrapper.spotify.model_objects.specification.TrackSimplified;
 
 public class RecommendationSeedsGenerator {
+
+    private final int SEEDS_LIMIT = 5;
+    private Album album;
 
     public String generateArtistsSeed(Album album) {
         StringBuilder artistsSeed = new StringBuilder();
@@ -16,40 +20,29 @@ public class RecommendationSeedsGenerator {
     }
 
     public String generateTracksSeed(Album album) {
-        if (album.getTracks().getTotal() == 1) {
-            return album.getTracks().getItems()[0].getId();
-        }
-        if (!totalTracksAndArtistsExceedsSeedLimit(album)) {
-            return createSeedWithAllTrackIds(album);
+        this.album = album;
+        if (!totalTracksAndArtistsExceedsSeedLimit()) {
+            return formatTrackIdsIntoTrackSeed(album.getTracks().getTotal());
         } else {
-            return createSeedWithMaxPossibleTrackIds(album);
+            return formatTrackIdsIntoTrackSeed(SEEDS_LIMIT - album.getArtists().length);
         }
     }
 
-    private Boolean totalTracksAndArtistsExceedsSeedLimit(Album album) {
-        return album.getArtists().length + album.getTracks().getTotal() > 5;
+    private Boolean totalTracksAndArtistsExceedsSeedLimit() {
+        return album.getArtists().length + album.getTracks().getTotal() > SEEDS_LIMIT;
     }
 
-    private String createSeedWithAllTrackIds(Album album) {
+    private String formatTrackIdsIntoTrackSeed(int totalAllowedTrackIds) {
         StringBuilder tracksSeed = new StringBuilder();
-        for (int i = 0; i < album.getTracks().getTotal(); i++) {
-            if (i > 0) {
-                tracksSeed.append(',');
-            }
-            tracksSeed.append(album.getTracks().getItems()[i].getId());
+        tracksSeed.append(album.getTracks().getItems()[0].getId());
+        for (int i = 1; i < totalAllowedTrackIds; i++) {
+            tracksSeed.append(formatNonFirstTrackId(album.getTracks().getItems()[i]));
         }
         return tracksSeed.toString();
     }
 
-    private String createSeedWithMaxPossibleTrackIds(Album album) {
-        StringBuilder tracksSeed = new StringBuilder();
-        for (int i = 0; i < 5 - album.getArtists().length; i++) {
-            if (i > 0) {
-                tracksSeed.append(',');
-            }
-            tracksSeed.append(album.getTracks().getItems()[i].getId());
-        }
-        return tracksSeed.toString();
+    private String formatNonFirstTrackId(TrackSimplified track) {
+        return "," + track.getId();
     }
 
 }
