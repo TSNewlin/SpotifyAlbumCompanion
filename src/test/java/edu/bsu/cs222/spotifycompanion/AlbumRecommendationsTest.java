@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -30,7 +31,8 @@ public class AlbumRecommendationsTest {
     })
     public void testAlbumRecommendationNames(int recommendationNumber, String testTitle) {
         AlbumRecommendations testRecommendations = createTestAlbumRecommendations();
-        Assertions.assertEquals(testRecommendations.getAlbums()[recommendationNumber].getName(), testTitle);
+        List<String> testRecommendationNames = testRecommendations.getRecommendedAlbumNames();
+        Assertions.assertEquals(testRecommendationNames.get(recommendationNumber), testTitle);
     }
 
     private AlbumRecommendations createTestAlbumRecommendations() {
