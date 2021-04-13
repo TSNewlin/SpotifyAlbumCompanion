@@ -19,7 +19,7 @@ public class RecommendationSeedsGeneratorTest {
     private final RecommendationSeedsGenerator testSeedGenerator = new RecommendationSeedsGenerator();
 
     @ParameterizedTest
-    @CsvSource(delimiter = '|', value = {"4MzJMcHQBl9SIYSjwWn8QW | testAlbum.json",
+    @CsvSource(delimiter = '|', value = {"4MzJMcHQBl9SIYSjwWn8QW | testalbum.json",
             "3nFkdlSjzX9mRTtwJOzDYB,5K4W6rqBFWDnAN6FQUkS6x | testalbum_multiartist.json"})
     public void testGenerateArtistSeed(String artistsSeed, String fileName) {
         Album testAlbum = createTestAlbum(fileName);
