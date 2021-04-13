@@ -14,7 +14,7 @@ public class ClientCredentialsLoaderTest {
     public void testLoadCredentialsFrom() throws IOException {
         ClientCredentialsLoader credentialsLoader = new ClientCredentialsLoader();
         List<String> result = credentialsLoader.loadCredentialsFrom("fakecredentials.txt");
-        List<String> actual = Arrays.asList("kG7jAee21k9hNdGVOIxcgruRMso6zKifD", "FAHrrlZ8BVGH2ralukF8QwymnP7t4BBJ3");
+        List<String> actual = Arrays.asList("fake_client_id", "fake_client_secret");
         Assertions.assertEquals(result, actual);
     }
 

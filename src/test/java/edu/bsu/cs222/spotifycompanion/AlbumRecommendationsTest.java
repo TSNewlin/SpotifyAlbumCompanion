@@ -16,9 +16,18 @@ import java.util.stream.Collectors;
 public class AlbumRecommendationsTest {
 
     @ParameterizedTest
-    @CsvSource(delimiter = '|', value = {"0 | How Fleeting, How Fragile",
-    "1 | Automata I", "2 | Wanderer", "3 | From the Gallery of Sleep", "4 | Domino",
-    "5 | Immortal", "6 | It Hates You", "7 | The Act", "8 | Sonder", "9 | Evergreen"})
+    @CsvSource(delimiter = '|', value = {
+            "0 | How Fleeting, How Fragile",
+            "1 | Automata I",
+            "2 | Wanderer",
+            "3 | From the Gallery of Sleep",
+            "4 | Domino",
+            "5 | Immortal",
+            "6 | It Hates You",
+            "7 | The Act",
+            "8 | Sonder",
+            "9 | Evergreen"
+    })
     public void testAlbumRecommendationNames(int recommendationNumber, String testTitle) {
         AlbumRecommendations testRecommendations = createTestAlbumRecommendations();
         Assertions.assertEquals(testRecommendations.getAlbums()[recommendationNumber].getName(), testTitle);
