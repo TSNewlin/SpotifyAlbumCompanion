@@ -28,7 +28,7 @@ public class RecommendationsArea extends VBox {
     public RecommendationsArea() {
         formatGrid();
         configureSearchRecommendationsBinding();
-        getChildren().addAll(setUpTopBar(), setUpScrollPane());
+        getChildren().addAll(setUpTopBar(), createUpScrollPane());
     }
 
     public void show(AlbumRecommendations recommendations) {
@@ -89,7 +89,7 @@ public class RecommendationsArea extends VBox {
         return recommendationsButton;
     }
 
-    private ScrollPane setUpScrollPane() {
+    private ScrollPane createUpScrollPane() {
         ScrollPane pane = new ScrollPane();
         pane.setContent(recommendedAlbumsGrid);
         pane.setPrefHeight(285);
