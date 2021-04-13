@@ -13,12 +13,11 @@ public class FactsView extends InformationView {
 
     public FactsView() {
         super();
-        add(new Text("Title"), 0, 0);
-        add(new Text("Artist"), 0, 1);
-        add(new Text("Release Date"), 0, 2);
-        add(new Text("Spotify Popularity"), 0, 3);
-        add(new Text("Duration"), 0, 4);
-        add(new Text("Record Label"), 0, 5);
+        List<String> labelTextList = Arrays.asList("Title", "Artists", "Release Date", "Spotify Popularity",
+                "Duration", "Record Label");
+        for(int i = 0; i < labelTextList.size(); i++) {
+            add(new Text(labelTextList.get(i)), 0, i);
+        }
     }
 
     public void show(Album album) {
