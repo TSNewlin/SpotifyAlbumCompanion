@@ -1,5 +1,6 @@
 package edu.bsu.cs222.spotifycompanion.gui;
 
+import com.wrapper.spotify.model_objects.specification.Album;
 import com.wrapper.spotify.model_objects.specification.AlbumSimplified;
 import edu.bsu.cs222.spotifycompanion.model.AlbumRecommendations;
 import javafx.beans.binding.BooleanBinding;
@@ -39,8 +40,8 @@ public class RecommendationsArea extends VBox {
         }
     }
 
-    public void addAlbumTitle(String title) {
-        albumTitleLabel.setText(toTitleCase(title));
+    public void addAlbumTitle(Album album) {
+        albumTitleLabel.setText(toTitleCase(album.getName()));
     }
 
     private String toTitleCase(String givenString) {
