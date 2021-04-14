@@ -118,7 +118,7 @@ public class SpotifyAlbumCompanionUI extends Application {
                 this.foundAlbum = album;
                 factsView.show(album);
                 tracksView.show(album);
-                recommendationsArea.addAlbumTitle(albumTitle);
+                recommendationsArea.addAlbumTitle(album);
             } catch (SpotifyWebApiException exception) {
                 spotifyWebApiExceptionAlert.showAlert(exception);
             }
