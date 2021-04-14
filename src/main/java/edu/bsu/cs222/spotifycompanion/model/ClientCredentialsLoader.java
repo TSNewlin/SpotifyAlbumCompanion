@@ -21,7 +21,7 @@ public class ClientCredentialsLoader {
     }
 
     private Preferences getUserPreferences(List<String> credentials) {
-        userPreferences.put("userID", credentials.get(0));
+        userPreferences.put("userId", credentials.get(0));
         userPreferences.put("userSecret", credentials.get(1));
         return userPreferences;
     }
