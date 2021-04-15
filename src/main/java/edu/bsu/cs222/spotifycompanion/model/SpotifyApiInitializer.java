@@ -6,24 +6,24 @@ import com.wrapper.spotify.requests.authorization.client_credentials.ClientCrede
 import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.prefs.Preferences;
 
 public class SpotifyApiInitializer {
 
     public SpotifyApi initializeApi() throws SpotifyWebApiException {
         try {
             ClientCredentialsLoader credentialsLoader = new ClientCredentialsLoader();
-            List<String> clientCredentialsList = credentialsLoader.loadCredentialsFrom("clientcredentials.txt");
-            return initializeWithClientCredentialFlow(clientCredentialsList);
+            Preferences clientPreferences = credentialsLoader.loadCredentialsFrom("clientcredentials.txt");
+            return initializeWithClientCredentialFlow(clientPreferences);
         } catch (IOException | ParseException | SpotifyWebApiException e) {
             throw new SpotifyWebApiException();
         }
     }
 
-    private SpotifyApi initializeWithClientCredentialFlow(List<String> clientCredentialsList)
+    private SpotifyApi initializeWithClientCredentialFlow(Preferences clientCredentials)
             throws SpotifyWebApiException, IOException, ParseException {
-        SpotifyApi spotifyApi = SpotifyApi.builder().setClientId(clientCredentialsList.get(0))
-                .setClientSecret(clientCredentialsList.get(1))
+        SpotifyApi spotifyApi = SpotifyApi.builder().setClientId(clientCredentials.get("userID", "invalidID"))
+                .setClientSecret(clientCredentials.get("userSecret", "invalidSecret"))
                 .build();
         ClientCredentialsRequest credentialsRequest = spotifyApi.clientCredentials().build();
         spotifyApi.setAccessToken(credentialsRequest.execute().getAccessToken());

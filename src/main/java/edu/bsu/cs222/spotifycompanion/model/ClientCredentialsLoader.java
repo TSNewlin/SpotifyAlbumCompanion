@@ -7,15 +7,23 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.prefs.Preferences;
 
 public class ClientCredentialsLoader {
 
     private BufferedReader reader;
+    private final Preferences userPreferences = Preferences.userNodeForPackage(this.getClass());
 
-    public List<String> loadCredentialsFrom(String fileName) throws IOException{
+    public Preferences loadCredentialsFrom(String fileName) throws IOException{
         InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);
         reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(inputStream)));
-        return parseLineToList();
+        return getUserPreferences(parseLineToList());
+    }
+
+    private Preferences getUserPreferences(List<String> credentials) {
+        userPreferences.put("userId", credentials.get(0));
+        userPreferences.put("userSecret", credentials.get(1));
+        return userPreferences;
     }
 
     private List<String> parseLineToList() throws IOException {
