@@ -6,6 +6,7 @@ import com.wrapper.spotify.model_objects.AbstractModelObject;
 import com.wrapper.spotify.model_objects.specification.AlbumSimplified;
 import com.wrapper.spotify.model_objects.specification.Track;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -13,13 +14,12 @@ import java.util.Objects;
 public class AlbumRecommendations extends AbstractModelObject {
 
     private final Track[] tracks;
-    private final AlbumSimplified[] albums;
+    private final ArrayList<AlbumSimplified> recommendedAlbumList = new ArrayList<>();
 
     private AlbumRecommendations(final Builder builder) {
         super(builder);
-
         this.tracks = builder.tracks;
-        this.albums = getAlbumSimplifiedsFromTracks();
+        getAlbumSimplifiedsFromTracks();
     }
 
 
@@ -28,16 +28,19 @@ public class AlbumRecommendations extends AbstractModelObject {
         return "tracks = " + Arrays.toString(tracks);
     }
 
-    public AlbumSimplified[] getAlbums() {
-        return albums;
+    public ArrayList<String> getRecommendedAlbumNames() {
+        ArrayList<String> recommendedAlbumNames = new ArrayList<>();
+        for (AlbumSimplified album : recommendedAlbumList) {
+            recommendedAlbumNames.add(album.getName());
+        }
+        return recommendedAlbumNames;
     }
 
-    private AlbumSimplified[] getAlbumSimplifiedsFromTracks() {
-        AlbumSimplified[] albumSimples = new AlbumSimplified[tracks.length];
-        for (int i = 0; i < tracks.length; i++) {
-            albumSimples[i] = tracks[i].getAlbum();
+    private void getAlbumSimplifiedsFromTracks() {
+        for (Track track : tracks) {
+            recommendedAlbumList.add(track.getAlbum());
         }
-        return albumSimples;
+
     }
 
     @Override

@@ -7,7 +7,9 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -34,9 +36,9 @@ public class RecommendationsArea extends VBox {
 
     public void show(AlbumRecommendations recommendations) {
         recommendedAlbumsGrid.getChildren().removeIf(node -> getColumnIndex(node) == 0);
-        AlbumSimplified[] albums = recommendations.getAlbums();
-        for (int i = 0; i < albums.length; i++) {
-            recommendedAlbumsGrid.add(new Text(albums[i].getName()), 0, i);
+        List<String> recommendedAlbumNames = recommendations.getRecommendedAlbumNames();
+        for (int i = 0; i < recommendedAlbumNames.size(); i++) {
+            recommendedAlbumsGrid.add(new Text(recommendedAlbumNames.get(i)), 0, i);
         }
     }
 
@@ -67,6 +69,7 @@ public class RecommendationsArea extends VBox {
             {
                 bind(albumTitleLabel.textProperty());
             }
+
             @Override
             protected boolean computeValue() {
                 return !albumTitleLabel.getText().isEmpty();
