@@ -36,9 +36,9 @@ public class RecommendationsArea extends VBox {
 
     public void show(AlbumRecommendations recommendations) {
         recommendedAlbumsGrid.getChildren().removeIf(node -> getColumnIndex(node) == 0);
-        List<String> recommendedAlbumNames = recommendations.getRecommendedAlbumNames();
-        for (int i = 0; i < recommendedAlbumNames.size(); i++) {
-            recommendedAlbumsGrid.add(new Text(recommendedAlbumNames.get(i)), 0, i);
+        List<AlbumSimplified> recommendedAlbums = recommendations.getRecommendedAlbums();
+        for (int i = 0; i < recommendedAlbums.size(); i++) {
+            recommendedAlbumsGrid.add(new Text(recommendedAlbums.get(i).getName()), 0, i);
         }
     }
 
