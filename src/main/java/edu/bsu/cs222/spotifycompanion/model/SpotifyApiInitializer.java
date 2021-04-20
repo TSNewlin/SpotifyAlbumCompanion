@@ -22,7 +22,7 @@ public class SpotifyApiInitializer {
 
     private SpotifyApi initializeWithClientCredentialFlow(Preferences clientCredentials)
             throws SpotifyWebApiException, IOException, ParseException {
-        SpotifyApi spotifyApi = SpotifyApi.builder().setClientId(clientCredentials.get("userID", "invalidID"))
+        SpotifyApi spotifyApi = SpotifyApi.builder().setClientId(clientCredentials.get("userId", "invalidID"))
                 .setClientSecret(clientCredentials.get("userSecret", "invalidSecret"))
                 .build();
         ClientCredentialsRequest credentialsRequest = spotifyApi.clientCredentials().build();
