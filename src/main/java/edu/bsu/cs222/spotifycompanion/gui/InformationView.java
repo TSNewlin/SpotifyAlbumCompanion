@@ -12,12 +12,13 @@ public abstract class InformationView extends GridPane {
     private void initializeGrid() {
         setManaged(false);
         setVisible(false);
-        setPrefHeight(300);
         setVgap(10);
         for (int i = 0; i < 2; i++) {
-            ColumnConstraints column = new ColumnConstraints(150);
+            ColumnConstraints column = new ColumnConstraints();
+            column.setMinWidth(125);
             getColumnConstraints().add(column);
         }
+
     }
 
 }
