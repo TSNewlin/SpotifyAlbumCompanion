@@ -13,7 +13,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +37,10 @@ public class RecommendationsArea extends VBox {
         recommendedAlbumsGrid.getChildren().removeIf(node -> getColumnIndex(node) == 0);
         List<AlbumSimplified> recommendedAlbums = recommendations.getRecommendedAlbums();
         for (int i = 0; i < recommendedAlbums.size(); i++) {
-            recommendedAlbumsGrid.add(new Text(recommendedAlbums.get(i).getName()), 0, i);
+            ActionSetHyperLink hyperLink = ActionSetHyperLink.withText(recommendedAlbums.get(i).getName())
+                    .andExternalUrl(recommendedAlbums.get(i).getExternalUrls().get("spotify"))
+                    .andUri(recommendedAlbums.get(i).getUri());
+            recommendedAlbumsGrid.add(hyperLink, 0, i);
         }
     }
 
