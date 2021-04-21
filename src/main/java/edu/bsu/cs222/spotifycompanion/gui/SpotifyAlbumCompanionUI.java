@@ -57,21 +57,14 @@ public class SpotifyAlbumCompanionUI extends Application {
 
     private Parent setUpUI() {
         GridPane mainGrid = new GridPane();
-        VBox recommendationArea = setUpRecommendedArea();
         VBox informationInputArea = setUpInformationInputArea();
         VBox spotifyLogo = setUpSpotifyLogoImage();
         ScrollPane informationViewArea = setUpInformationViewArea();
-        mainGrid.add(recommendationArea, 1, 0, 1, 2);
+        mainGrid.add(recommendationsArea, 1, 0, 1, 2);
         mainGrid.add(informationInputArea, 0, 0);
         mainGrid.add(spotifyLogo, 1, 2);
         mainGrid.add(informationViewArea, 0, 1);
         return mainGrid;
-    }
-
-    private VBox setUpRecommendedArea() {
-        recommendationsArea.addListener(() -> searchForRecommendationsOf(foundAlbum));
-        recommendationsArea.setPrefWidth(300);
-        return new VBox(recommendationsArea);
     }
 
     private VBox setUpInformationInputArea() {
@@ -118,7 +111,6 @@ public class SpotifyAlbumCompanionUI extends Application {
                 this.foundAlbum = album;
                 factsView.show(album);
                 tracksView.show(album);
-                recommendationsArea.addAlbumTitle(album);
             } catch (SpotifyWebApiException exception) {
                 spotifyWebApiExceptionAlert.showAlert(exception);
             }
@@ -126,8 +118,8 @@ public class SpotifyAlbumCompanionUI extends Application {
     }
 
     private void searchForRecommendationsOf(Album album) {
-        executor.execute(() -> Platform.runLater(() ->{
-            try{
+        executor.execute(() -> Platform.runLater(() -> {
+            try {
                 AlbumRecommendations recommendations = apiApplicant.searchForRecommendations(album);
                 recommendationsArea.show(recommendations);
             } catch (SpotifyWebApiException exception) {
