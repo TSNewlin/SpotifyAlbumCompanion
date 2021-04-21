@@ -2,6 +2,7 @@ package edu.bsu.cs222.spotifycompanion;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.wrapper.spotify.model_objects.specification.AlbumSimplified;
 import edu.bsu.cs222.spotifycompanion.model.AlbumRecommendations;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -31,8 +32,8 @@ public class AlbumRecommendationsTest {
     })
     public void testAlbumRecommendationNames(int recommendationNumber, String testTitle) {
         AlbumRecommendations testRecommendations = createTestAlbumRecommendations();
-        List<String> testRecommendationNames = testRecommendations.getRecommendedAlbumNames();
-        Assertions.assertEquals(testRecommendationNames.get(recommendationNumber), testTitle);
+        List<AlbumSimplified> testAlbumRecommendationsList = testRecommendations.getRecommendedAlbums();
+        Assertions.assertEquals(testAlbumRecommendationsList.get(recommendationNumber).getName(), testTitle);
     }
 
     private AlbumRecommendations createTestAlbumRecommendations() {

@@ -1,6 +1,7 @@
 package edu.bsu.cs222.spotifycompanion.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonObject;
 import com.wrapper.spotify.model_objects.AbstractModelObject;
 import com.wrapper.spotify.model_objects.specification.AlbumSimplified;
@@ -8,6 +9,7 @@ import com.wrapper.spotify.model_objects.specification.Track;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 @JsonDeserialize(builder = AlbumRecommendations.Builder.class)
@@ -28,12 +30,8 @@ public class AlbumRecommendations extends AbstractModelObject {
         return "tracks = " + Arrays.toString(tracks);
     }
 
-    public ArrayList<String> getRecommendedAlbumNames() {
-        ArrayList<String> recommendedAlbumNames = new ArrayList<>();
-        for (AlbumSimplified album : recommendedAlbumList) {
-            recommendedAlbumNames.add(album.getName());
-        }
-        return recommendedAlbumNames;
+    public List<AlbumSimplified> getRecommendedAlbums() {
+        return ImmutableList.copyOf(recommendedAlbumList);
     }
 
     private void getAlbumSimplifiedsFromTracks() {

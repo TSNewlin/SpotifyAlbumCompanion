@@ -39,8 +39,7 @@ public class SpotifyAlbumCompanionUI extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.apiApplicant = initializeApiApplicant();
-        Parent ui = setUpUI();
-        primaryStage.setScene(new Scene(ui));
+        primaryStage.setScene(new Scene(setUpUI()));
         primaryStage.setTitle("Album Companion");
         primaryStage.show();
     }

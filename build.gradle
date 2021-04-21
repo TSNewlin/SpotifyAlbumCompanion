@@ -26,7 +26,7 @@ test {
 
 javafx {
     version = "15.0.1"
-    modules = [ 'javafx.controls' ]
+    modules = [ 'javafx.controls', 'javafx.web' ]
 }
 
 mainClassName = "edu.bsu.cs222.spotifycompanion.gui.SpotifyAlbumCompanionUI"
