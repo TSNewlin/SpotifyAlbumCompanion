@@ -2,6 +2,7 @@ package edu.bsu.cs222.spotifycompanion.gui;
 
 import com.wrapper.spotify.model_objects.specification.Album;
 import com.wrapper.spotify.model_objects.specification.AlbumSimplified;
+import com.wrapper.spotify.model_objects.specification.Image;
 import edu.bsu.cs222.spotifycompanion.model.AlbumRecommendations;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
@@ -10,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -34,13 +36,22 @@ public class RecommendationsArea extends VBox {
     }
 
     public void show(AlbumRecommendations recommendations) {
-        recommendedAlbumsGrid.getChildren().removeIf(node -> getColumnIndex(node) == 0);
+        recommendedAlbumsGrid.getChildren().clear();
         List<AlbumSimplified> recommendedAlbums = recommendations.getRecommendedAlbums();
+        addAlbumImages(recommendedAlbums);
         for (int i = 0; i < recommendedAlbums.size(); i++) {
             ActionSetHyperLink hyperLink = ActionSetHyperLink.withText(recommendedAlbums.get(i).getName())
                     .andExternalUrl(recommendedAlbums.get(i).getExternalUrls().get("spotify"))
                     .andUri(recommendedAlbums.get(i).getUri());
-            recommendedAlbumsGrid.add(hyperLink, 0, i);
+            recommendedAlbumsGrid.add(hyperLink, 1, i);
+        }
+    }
+
+    private void addAlbumImages(List<AlbumSimplified> recommendedAlbums) {
+        for (int i = 0; i < recommendedAlbums.size(); i++) {
+            Image albumImage = recommendedAlbums.get(i).getImages()[2];
+            ImageView albumImageView = new ImageView(albumImage.getUrl());
+            recommendedAlbumsGrid.add(albumImageView, 0, i);
         }
     }
 

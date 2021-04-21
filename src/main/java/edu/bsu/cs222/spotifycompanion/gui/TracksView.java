@@ -5,7 +5,7 @@ import com.wrapper.spotify.model_objects.specification.Paging;
 import com.wrapper.spotify.model_objects.specification.TrackSimplified;
 import javafx.scene.text.Text;
 
-public class TracksView extends InformationView{
+public class TracksView extends InformationView {
 
     public TracksView() {
         super();
@@ -24,6 +24,7 @@ public class TracksView extends InformationView{
             add(new Text(track.getName()), 1, counter);
             counter++;
         }
+
     }
 
 }
