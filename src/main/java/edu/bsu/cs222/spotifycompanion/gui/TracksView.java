@@ -9,7 +9,6 @@ public class TracksView extends InformationView{
 
     public TracksView() {
         super();
-        setPrefWidth(500);
     }
 
     public void show(Album album) {
