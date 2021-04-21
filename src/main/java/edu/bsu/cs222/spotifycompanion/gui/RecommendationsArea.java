@@ -1,6 +1,7 @@
 package edu.bsu.cs222.spotifycompanion.gui;
 
 import com.wrapper.spotify.model_objects.specification.Album;
+import com.wrapper.spotify.model_objects.specification.AlbumSimplified;
 import edu.bsu.cs222.spotifycompanion.model.AlbumRecommendations;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
@@ -58,7 +59,7 @@ public class RecommendationsArea extends VBox {
     private void formatGrid() {
         for (int i = 0; i < 2; i++) {
             ColumnConstraints column = new ColumnConstraints();
-            column.setMinWidth(125);
+            column.setMinWidth(70);
             recommendedAlbumsGrid.getColumnConstraints().add(column);
         }
         recommendedAlbumsGrid.setHgap(10);

@@ -70,6 +70,7 @@ public class SpotifyAlbumCompanionUI extends Application {
 
     private VBox setUpRecommendedArea() {
         recommendationsArea.addListener(() -> searchForRecommendationsOf(foundAlbum));
+        recommendationsArea.setPrefWidth(300);
         return new VBox(recommendationsArea);
     }
 
