@@ -20,8 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static javafx.scene.layout.GridPane.getColumnIndex;
-
 public class RecommendationsArea extends VBox {
 
     private final Label albumTitleLabel = new Label();
@@ -56,16 +54,9 @@ public class RecommendationsArea extends VBox {
     }
 
     public void addAlbumTitle(Album album) {
-        albumTitleLabel.setText(toTitleCase(album.getName()));
+        albumTitleLabel.setText(album.getName());
     }
 
-    private String toTitleCase(String givenString) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (String s : givenString.split(" ")) {
-            stringBuilder.append(Character.toUpperCase(s.charAt(0))).append(s.substring(1)).append(" ");
-        }
-        return stringBuilder.toString().trim();
-    }
 
     private void formatGrid() {
         for (int i = 0; i < 2; i++) {

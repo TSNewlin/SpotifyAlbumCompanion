@@ -75,8 +75,8 @@ public class SpotifyAlbumCompanionUI extends Application {
     }
 
     private VBox setUpInformationInputArea() {
-        InformationInputArea informationInputArea = new InformationInputArea();
-        informationInputArea.addListener(new InformationInputArea.Listener() {
+        InputArea informationInputArea = new InputArea();
+        informationInputArea.addListener(new InputArea.Listener() {
             @Override
             public void onAlbumTitleSpecified(String albumTitle) {
                 querySpotifyForAlbum(albumTitle);

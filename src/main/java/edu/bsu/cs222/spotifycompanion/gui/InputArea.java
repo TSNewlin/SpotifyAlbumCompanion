@@ -16,27 +16,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class InformationInputArea extends VBox {
+public class InputArea extends VBox {
 
     private final List<Listener> eventListeners = new ArrayList<>();
     private final BooleanProperty searchEnabled = new SimpleBooleanProperty(false);
     private final FilterSwitch filterSwitch = new FilterSwitch();
     private final TextField searchBar = new TextField();
 
-    public InformationInputArea() {
-        Node queryArea = setUpInputArea();
-        getChildren().add(queryArea);
+    public InputArea() {
+        Node topInputArea = setUpTopInputArea();
+        Button recommendationSearchButton = createRecommendationsSearchButton();
+        getChildren().addAll(topInputArea, recommendationSearchButton);
         setUpFilterSwitchEvents();
         configureSearchEnablingBindingProperty();
         setAlignment(Pos.CENTER);
     }
 
-    private Node setUpInputArea() {
+    private Node setUpTopInputArea() {
         HBox innerQueryArea = setUpSearchArea();
         HBox inputBox = new HBox(35);
         inputBox.setPadding(new Insets(5, 0, 5, 0));
         inputBox.getChildren().addAll(innerQueryArea, filterSwitch);
         return inputBox;
+    }
+
+    private Button createRecommendationsSearchButton(){
+        Button recommendationsSearchButton = new Button("Search for Album Recommendations");
+        recommendationsSearchButton.setDisable(true);
+        return recommendationsSearchButton;
     }
 
     private void setUpFilterSwitchEvents() {
