@@ -1,6 +1,7 @@
 package edu.bsu.cs222.spotifycompanion.gui;
 
 import com.wrapper.spotify.model_objects.specification.Album;
+import com.wrapper.spotify.model_objects.specification.AlbumSimplified;
 import edu.bsu.cs222.spotifycompanion.model.AlbumRecommendations;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
