@@ -42,7 +42,7 @@ public class InputArea extends VBox {
 
     private Button createRecommendationsSearchButton(){
         Button recommendationsSearchButton = new Button("Search for Album Recommendations");
-        recommendationsSearchButton.setDisable(true);
+        recommendationsSearchButton.setOnAction(event -> fireOnRecommendationsSearchButtonPressed());
         return recommendationsSearchButton;
     }
 
@@ -96,6 +96,7 @@ public class InputArea extends VBox {
     public interface Listener {
         void onAlbumTitleSpecified(String albumTitle);
         void onInformationTypeSelected(InformationType informationType);
+        void onRecommendationsSearchButtonPressed();
     }
 
     public void addListener(Listener listener) {
@@ -115,5 +116,11 @@ public class InputArea extends VBox {
             eventListener.onInformationTypeSelected(filterSwitch.getSelectedFilterType());
         }
         filterSwitch.changeSelectedFilter();
+    }
+
+    private void fireOnRecommendationsSearchButtonPressed() {
+        for (Listener eventListener : eventListeners) {
+            eventListener.onRecommendationsSearchButtonPressed();
+        }
     }
 }

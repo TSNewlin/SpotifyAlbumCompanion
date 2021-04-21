@@ -57,7 +57,7 @@ public class SpotifyAlbumCompanionUI extends Application {
 
     private Parent setUpUI() {
         GridPane mainGrid = new GridPane();
-        VBox informationInputArea = setUpInformationInputArea();
+        VBox informationInputArea = setUpInputArea();
         VBox spotifyLogo = setUpSpotifyLogoImage();
         ScrollPane informationViewArea = setUpInformationViewArea();
         mainGrid.add(recommendationsArea, 1, 0, 1, 2);
@@ -67,7 +67,7 @@ public class SpotifyAlbumCompanionUI extends Application {
         return mainGrid;
     }
 
-    private VBox setUpInformationInputArea() {
+    private VBox setUpInputArea() {
         InputArea informationInputArea = new InputArea();
         informationInputArea.addListener(new InputArea.Listener() {
             @Override
@@ -79,6 +79,12 @@ public class SpotifyAlbumCompanionUI extends Application {
             public void onInformationTypeSelected(InformationType informationType) {
                 changeSeenOutput(informationType);
             }
+
+            @Override
+            public void onRecommendationsSearchButtonPressed() {
+                searchForRecommendationsOf(foundAlbum);
+            }
+
         });
         return new VBox(informationInputArea);
     }
