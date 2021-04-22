@@ -21,7 +21,7 @@ public class TracksView extends InformationView {
         int counter = 0;
         for (TrackSimplified track : tracksPaging.getItems()) {
             add(new Text("Track #" + track.getTrackNumber()), 0, counter );
-            add(new Text(track.getName()), 1, counter);
+            add(ActionSetHyperLink.withText(track.getName()).andExternalUrl(track.getExternalUrls().get("spotify")).andUri(track.getUri()), 1, counter);
             counter++;
         }
 
