@@ -107,7 +107,7 @@ public class SpotifyAlbumCompanionUI extends Application {
         factsView.setManaged(true);
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(innerScrollBox);
-        scrollPane.setPrefHeight(300);
+        scrollPane.setPrefHeight(400);
         scrollPane.setPrefWidth(300);
         scrollPane.setStyle("-fx-border-color: transparent;" + "-fx-focus-color: transparent;");
         return scrollPane;

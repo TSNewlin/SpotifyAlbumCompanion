@@ -2,10 +2,16 @@ package edu.bsu.cs222.spotifycompanion.gui;
 
 import com.wrapper.spotify.model_objects.specification.Album;
 import com.wrapper.spotify.model_objects.specification.Image;
+import javafx.geometry.Insets;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 public class AlbumAttributesBox extends VBox {
+
+    public AlbumAttributesBox() {
+        setPadding(new Insets(5, 0, 0, 0));
+        setPrefHeight(175);
+    }
 
     public void show(Album album) {
         getChildren().clear();
@@ -17,6 +23,7 @@ public class AlbumAttributesBox extends VBox {
                 .andExternalUrl(album.getArtists()[0].getExternalUrls().get("spotify"))
                 .andUri(album.getArtists()[0].getUri());
         getChildren().addAll(albumCoverImageView, albumHyperLink, artistHyperLink);
+        System.out.println(artistHyperLink.getPadding());
     }
 
 }
