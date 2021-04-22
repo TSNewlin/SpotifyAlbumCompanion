@@ -32,6 +32,7 @@ public class SpotifyAlbumCompanionUI extends Application {
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
     private final RecommendationsArea recommendationsArea = new RecommendationsArea();
     private final SpotifyWebApiExceptionAlert spotifyWebApiExceptionAlert = new SpotifyWebApiExceptionAlert();
+    private final InputArea inputArea = new InputArea();
     private SpotifyApiApplicant apiApplicant;
     private Album foundAlbum;
 
@@ -58,7 +59,7 @@ public class SpotifyAlbumCompanionUI extends Application {
     private Parent setUpUI() {
         GridPane mainGrid = new GridPane();
         mainGrid.setHgap(2);
-        VBox inputArea = setUpInputArea();
+        setUpInputArea();
         VBox spotifyLogo = setUpSpotifyLogoImage();
         ScrollPane informationViewArea = setUpInformationViewArea();
         mainGrid.add(recommendationsArea, 2, 0, 1, 2);
@@ -68,9 +69,8 @@ public class SpotifyAlbumCompanionUI extends Application {
         return mainGrid;
     }
 
-    private VBox setUpInputArea() {
-        InputArea informationInputArea = new InputArea();
-        informationInputArea.addListener(new InputArea.Listener() {
+    private void setUpInputArea() {
+        inputArea.addListener(new InputArea.Listener() {
             @Override
             public void onAlbumTitleSpecified(String albumTitle) {
                 querySpotifyForAlbum(albumTitle);
@@ -87,7 +87,6 @@ public class SpotifyAlbumCompanionUI extends Application {
             }
 
         });
-        return new VBox(informationInputArea);
     }
 
     private VBox setUpSpotifyLogoImage() {
@@ -119,6 +118,7 @@ public class SpotifyAlbumCompanionUI extends Application {
                 this.foundAlbum = album;
                 factsView.show(album);
                 tracksView.show(album);
+                inputArea.enableRecommendationsSearchButton();
             } catch (SpotifyWebApiException exception) {
                 spotifyWebApiExceptionAlert.showAlert(exception);
             }

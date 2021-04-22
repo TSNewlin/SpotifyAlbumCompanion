@@ -22,14 +22,19 @@ public class InputArea extends VBox {
     private final BooleanProperty searchEnabled = new SimpleBooleanProperty(false);
     private final FilterSwitch filterSwitch = new FilterSwitch();
     private final TextField searchBar = new TextField();
+    private final Button recommendationsSearchButton = new Button("Search for Album Recommendations");
 
     public InputArea() {
         Node topInputArea = setUpTopInputArea();
-        Button recommendationSearchButton = createRecommendationsSearchButton();
-        getChildren().addAll(topInputArea, recommendationSearchButton);
+        setUpRecommendationsSearchButton();
+        getChildren().addAll(topInputArea, recommendationsSearchButton);
         setUpFilterSwitchEvents();
         configureSearchEnablingBindingProperty();
         setAlignment(Pos.CENTER);
+    }
+
+    public void enableRecommendationsSearchButton(){
+        recommendationsSearchButton.setDisable(false);
     }
 
     private Node setUpTopInputArea() {
@@ -40,10 +45,9 @@ public class InputArea extends VBox {
         return inputBox;
     }
 
-    private Button createRecommendationsSearchButton(){
-        Button recommendationsSearchButton = new Button("Search for Album Recommendations");
+    private void setUpRecommendationsSearchButton(){
+        recommendationsSearchButton.setDisable(true);
         recommendationsSearchButton.setOnAction(event -> fireOnRecommendationsSearchButtonPressed());
-        return recommendationsSearchButton;
     }
 
     private void setUpFilterSwitchEvents() {
