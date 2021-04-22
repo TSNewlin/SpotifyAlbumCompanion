@@ -57,13 +57,14 @@ public class SpotifyAlbumCompanionUI extends Application {
 
     private Parent setUpUI() {
         GridPane mainGrid = new GridPane();
-        VBox informationInputArea = setUpInputArea();
+        mainGrid.setHgap(2);
+        VBox inputArea = setUpInputArea();
         VBox spotifyLogo = setUpSpotifyLogoImage();
         ScrollPane informationViewArea = setUpInformationViewArea();
-        mainGrid.add(recommendationsArea, 1, 0, 1, 2);
-        mainGrid.add(informationInputArea, 0, 0);
-        mainGrid.add(spotifyLogo, 1, 2);
-        mainGrid.add(informationViewArea, 0, 1);
+        mainGrid.add(recommendationsArea, 2, 0, 1, 2);
+        mainGrid.add(inputArea, 0, 0);
+        mainGrid.add(spotifyLogo, 2, 2);
+        mainGrid.add(informationViewArea, 1, 0, 1, 2);
         return mainGrid;
     }
 
@@ -107,6 +108,7 @@ public class SpotifyAlbumCompanionUI extends Application {
         scrollPane.setContent(innerScrollBox);
         scrollPane.setPrefHeight(300);
         scrollPane.setPrefWidth(300);
+        scrollPane.setStyle("-fx-border-color: transparent;" + "-fx-focus-color: transparent;");
         return scrollPane;
     }
 
