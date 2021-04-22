@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.wrapper.spotify.model_objects.specification.Album;
 import com.wrapper.spotify.model_objects.specification.ArtistSimplified;
 import edu.bsu.cs222.spotifycompanion.model.AlbumDurationCalculator;
+import javafx.scene.Node;
 import javafx.scene.text.Text;
 
 import java.time.Duration;
@@ -26,19 +27,23 @@ public class FactsView extends InformationView {
     }
 
     private void formatGrid(Album album) {
-        List<Text> informationList = makeInformationList(album);
+        List<Node> informationList = makeInformationList(album);
         for (int i = 0; i < informationList.size(); i++) {
             add(informationList.get(i), 1, i);
         }
     }
 
-    private List<Text> makeInformationList(Album album) {
+    private List<Node> makeInformationList(Album album) {
         AlbumDurationCalculator durationCalculator = new AlbumDurationCalculator();
         Duration albumDuration = durationCalculator.calculateAlbumDuration(album);
         ArtistSimplified artistSimplified = album.getArtists()[0];
         return ImmutableList.of(
-                new Text(album.getName()),
-                new Text(artistSimplified.getName()),
+                ActionSetHyperLink.withText(album.getName())
+                        .andExternalUrl(album.getExternalUrls().get("spotify"))
+                        .andUri(album.getUri()),
+                ActionSetHyperLink.withText(artistSimplified.getName())
+                        .andExternalUrl(artistSimplified.getExternalUrls().get("spotify"))
+                        .andUri(artistSimplified.getUri()),
                 new Text(album.getReleaseDate()),
                 new Text(album.getPopularity().toString() + " / 100"),
                 new Text(String.format("%d minutes", albumDuration.toMinutes())),
