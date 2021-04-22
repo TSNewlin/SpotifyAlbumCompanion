@@ -5,7 +5,6 @@ import com.wrapper.spotify.model_objects.specification.Album;
 import com.wrapper.spotify.model_objects.specification.ArtistSimplified;
 import edu.bsu.cs222.spotifycompanion.model.AlbumDurationCalculator;
 import javafx.scene.Node;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.text.Text;
 
 import java.time.Duration;
@@ -39,8 +38,12 @@ public class FactsView extends InformationView {
         Duration albumDuration = durationCalculator.calculateAlbumDuration(album);
         ArtistSimplified artistSimplified = album.getArtists()[0];
         return ImmutableList.of(
-                ActionSetHyperLink.withText(album.getName()).andExternalUrl(album.getExternalUrls().get("spotify")).andUri(album.getUri()),
-                ActionSetHyperLink.withText(artistSimplified.getName()).andExternalUrl(artistSimplified.getExternalUrls().get("spotify")).andUri(artistSimplified.getUri()),
+                ActionSetHyperLink.withText(album.getName())
+                        .andExternalUrl(album.getExternalUrls().get("spotify"))
+                        .andUri(album.getUri()),
+                ActionSetHyperLink.withText(artistSimplified.getName())
+                        .andExternalUrl(artistSimplified.getExternalUrls().get("spotify"))
+                        .andUri(artistSimplified.getUri()),
                 new Text(album.getReleaseDate()),
                 new Text(album.getPopularity().toString() + " / 100"),
                 new Text(String.format("%d minutes", albumDuration.toMinutes())),
