@@ -22,7 +22,8 @@ public class RecommendationsArea extends ScrollPane {
         setContent(recommendedAlbumsGrid);
         setPrefHeight(400);
         setPrefWidth(300);
-        setStyle("-fx-border-color: transparent;" + "-fx-focus-color: transparent;");
+        setStyle("-fx-border-color: transparent;" + "-fx-focus-color: transparent;" +
+                "-fx-background: #2d2d2d;" + "-fx-background-color: #2d2d2d");
     }
 
     public void show(AlbumRecommendations recommendations) {

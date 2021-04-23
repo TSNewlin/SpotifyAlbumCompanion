@@ -59,6 +59,7 @@ public class SpotifyAlbumCompanionUI extends Application {
 
     private Parent setUpUI() {
         GridPane mainGrid = new GridPane();
+        mainGrid.setStyle("-fx-background-color: #2d2d2d;");
         mainGrid.setHgap(2);
         setUpInputArea();
         VBox spotifyLogo = setUpSpotifyLogoImage();
@@ -109,7 +110,8 @@ public class SpotifyAlbumCompanionUI extends Application {
         scrollPane.setContent(innerScrollBox);
         scrollPane.setPrefHeight(400);
         scrollPane.setPrefWidth(300);
-        scrollPane.setStyle("-fx-border-color: transparent;" + "-fx-focus-color: transparent;");
+        scrollPane.setStyle("-fx-border-color: transparent;" + "-fx-focus-color: transparent;"
+                + "-fx-background-color: #2d2d2d;" + "-fx-background: #2d2d2d;");
         return scrollPane;
     }
 

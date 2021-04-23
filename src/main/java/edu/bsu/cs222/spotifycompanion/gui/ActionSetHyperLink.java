@@ -44,6 +44,7 @@ public class ActionSetHyperLink extends Hyperlink {
         super(builder.text);
         this.externalWebLinkUri = builder.externalWebLinkUri;
         this.spotifyUri = builder.spotifyUri;
+        setStyle("-fx-text-fill: #d204ba;");
         setOnAction(event -> openContentInSpotify());
     }
 
