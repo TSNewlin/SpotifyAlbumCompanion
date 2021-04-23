@@ -8,6 +8,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 import java.util.List;
 
@@ -34,16 +35,21 @@ public class RecommendationsArea extends ScrollPane {
     private void addHyperLinks(List<AlbumSimplified> recommendedAlbums) {
         for (int i = 0; i < recommendedAlbums.size(); i++) {
             VBox hyperLinkBox = new VBox();
-            ActionSetHyperLink albumHyperLink = ActionSetHyperLink.withText(recommendedAlbums.get(i).getName())
-                    .andExternalUrl(recommendedAlbums.get(i).getExternalUrls().get("spotify"))
-                    .andUri(recommendedAlbums.get(i).getUri());
-            ArtistSimplified artistSimplified = recommendedAlbums.get(i).getArtists()[0];
-            ActionSetHyperLink artistHyperLink = ActionSetHyperLink.withText(artistSimplified.getName())
-                    .andUri(artistSimplified.getUri());
-            hyperLinkBox.getChildren().addAll(albumHyperLink, artistHyperLink);
+            hyperLinkBox.getChildren().addAll(getAlbumHyperLink(recommendedAlbums.get(i)),
+                    getArtistHyperLink(recommendedAlbums.get(i).getArtists()[0]));
             recommendedAlbumsGrid.add(hyperLinkBox, 1, i);
         }
+    }
 
+    private ActionSetHyperLink getArtistHyperLink(ArtistSimplified artistSimplified) {
+        return ActionSetHyperLink.withText(artistSimplified.getName())
+                .andUri(artistSimplified.getUri());
+    }
+
+    private ActionSetHyperLink getAlbumHyperLink(AlbumSimplified albumSimplified) {
+        return ActionSetHyperLink.withText(albumSimplified.getName())
+                .andExternalUrl(albumSimplified.getExternalUrls().get("spotify"))
+                .andUri(albumSimplified.getUri());
     }
 
     private void addAlbumImages(List<AlbumSimplified> recommendedAlbums) {
