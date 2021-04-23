@@ -2,6 +2,7 @@ package edu.bsu.cs222.spotifycompanion.gui;
 
 import com.wrapper.spotify.model_objects.specification.Album;
 import com.wrapper.spotify.model_objects.specification.AlbumSimplified;
+import com.wrapper.spotify.model_objects.specification.ArtistSimplified;
 import com.wrapper.spotify.model_objects.specification.Image;
 import edu.bsu.cs222.spotifycompanion.model.AlbumRecommendations;
 import javafx.beans.binding.BooleanBinding;
@@ -20,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static javafx.scene.layout.GridPane.getColumnIndex;
 
 public class RecommendationsArea extends VBox {
 
@@ -39,12 +39,22 @@ public class RecommendationsArea extends VBox {
         recommendedAlbumsGrid.getChildren().clear();
         List<AlbumSimplified> recommendedAlbums = recommendations.getRecommendedAlbums();
         addAlbumImages(recommendedAlbums);
+        addHyperLinks(recommendedAlbums);
+    }
+
+    private void addHyperLinks(List<AlbumSimplified> recommendedAlbums) {
         for (int i = 0; i < recommendedAlbums.size(); i++) {
-            ActionSetHyperLink hyperLink = ActionSetHyperLink.withText(recommendedAlbums.get(i).getName())
+            VBox hyperLinkBox = new VBox();
+            ActionSetHyperLink albumHyperLink = ActionSetHyperLink.withText(recommendedAlbums.get(i).getName())
                     .andExternalUrl(recommendedAlbums.get(i).getExternalUrls().get("spotify"))
                     .andUri(recommendedAlbums.get(i).getUri());
-            recommendedAlbumsGrid.add(hyperLink, 1, i);
+            ArtistSimplified artistSimplified = recommendedAlbums.get(i).getArtists()[0];
+            ActionSetHyperLink artistHyperLink = ActionSetHyperLink.withText(artistSimplified.getName())
+                    .andUri(artistSimplified.getUri());
+            hyperLinkBox.getChildren().addAll(albumHyperLink, artistHyperLink);
+            recommendedAlbumsGrid.add(hyperLinkBox, 1, i);
         }
+
     }
 
     private void addAlbumImages(List<AlbumSimplified> recommendedAlbums) {
@@ -56,15 +66,7 @@ public class RecommendationsArea extends VBox {
     }
 
     public void addAlbumTitle(Album album) {
-        albumTitleLabel.setText(toTitleCase(album.getName()));
-    }
-
-    private String toTitleCase(String givenString) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (String s : givenString.split(" ")) {
-            stringBuilder.append(Character.toUpperCase(s.charAt(0))).append(s.substring(1)).append(" ");
-        }
-        return stringBuilder.toString().trim();
+        albumTitleLabel.setText(album.getName());
     }
 
     private void formatGrid() {
@@ -73,8 +75,8 @@ public class RecommendationsArea extends VBox {
             column.setMinWidth(70);
             recommendedAlbumsGrid.getColumnConstraints().add(column);
         }
-        recommendedAlbumsGrid.setHgap(10);
-        recommendedAlbumsGrid.setVgap(10);
+        recommendedAlbumsGrid.setHgap(2);
+        recommendedAlbumsGrid.setVgap(2);
 
     }
 
