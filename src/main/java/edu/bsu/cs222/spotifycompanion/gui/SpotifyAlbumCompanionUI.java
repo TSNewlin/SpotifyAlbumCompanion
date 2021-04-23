@@ -33,6 +33,7 @@ public class SpotifyAlbumCompanionUI extends Application {
     private final RecommendationsArea recommendationsArea = new RecommendationsArea();
     private final SpotifyWebApiExceptionAlert spotifyWebApiExceptionAlert = new SpotifyWebApiExceptionAlert();
     private final InputArea inputArea = new InputArea();
+    private final AlbumAttributesBox albumAttributesBox = new AlbumAttributesBox();
     private SpotifyApiApplicant apiApplicant;
     private Album foundAlbum;
 
@@ -66,6 +67,7 @@ public class SpotifyAlbumCompanionUI extends Application {
         mainGrid.add(inputArea, 0, 0);
         mainGrid.add(spotifyLogo, 2, 2);
         mainGrid.add(informationViewArea, 1, 0, 1, 2);
+        mainGrid.add(albumAttributesBox, 0, 1, 1, 2);
         return mainGrid;
     }
 
@@ -105,7 +107,7 @@ public class SpotifyAlbumCompanionUI extends Application {
         factsView.setManaged(true);
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(innerScrollBox);
-        scrollPane.setPrefHeight(300);
+        scrollPane.setPrefHeight(400);
         scrollPane.setPrefWidth(300);
         scrollPane.setStyle("-fx-border-color: transparent;" + "-fx-focus-color: transparent;");
         return scrollPane;
@@ -118,6 +120,7 @@ public class SpotifyAlbumCompanionUI extends Application {
                 this.foundAlbum = album;
                 factsView.show(album);
                 tracksView.show(album);
+                albumAttributesBox.show(album);
                 inputArea.enableRecommendationsSearchButton();
             } catch (SpotifyWebApiException exception) {
                 spotifyWebApiExceptionAlert.showAlert(exception);
