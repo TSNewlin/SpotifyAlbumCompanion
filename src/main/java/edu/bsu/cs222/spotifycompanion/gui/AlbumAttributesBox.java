@@ -8,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 public class AlbumAttributesBox extends VBox {
 
@@ -23,6 +24,7 @@ public class AlbumAttributesBox extends VBox {
         ImageView albumCoverImageView = new ImageView(albumCover.getUrl());
         ActionSetHyperLink albumHyperLink = ActionSetHyperLink.withText(album.getName())
                 .andExternalUrl(album.getExternalUrls().get("spotify")).andUri(album.getUri());
+        albumHyperLink.setFont(Font.font(28));
         HBox artistHyperLinkBox = createArtistHyperLinkBox(album);
         getChildren().addAll(albumCoverImageView, albumHyperLink, artistHyperLinkBox);
     }
@@ -33,6 +35,7 @@ public class AlbumAttributesBox extends VBox {
             ActionSetHyperLink artistHyperLink = ActionSetHyperLink.withText(artist.getName())
                     .andExternalUrl(artist.getExternalUrls().get("spotify"))
                     .andUri(artist.getUri());
+            artistHyperLink.setFont(Font.font(18));
             artistHyperLinkBox.getChildren().add(artistHyperLink);
         }
         artistHyperLinkBox.setAlignment(Pos.TOP_CENTER);

@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class RecommendationsArea extends ScrollPane {
         setContent(recommendedAlbumsGrid);
         setPrefHeight(400);
         setPrefWidth(300);
-        setStyle("-fx-border-color: transparent;" + "-fx-focus-color: transparent;" +
-                "-fx-background: #2d2d2d;" + "-fx-background-color: #2d2d2d");
+        setStyle("-fx-border-color: transparent; -fx-focus-color: transparent;" +
+                "-fx-background: #2d2d2d; -fx-background-color: #2d2d2d");
     }
 
     public void show(AlbumRecommendations recommendations) {
@@ -44,13 +45,17 @@ public class RecommendationsArea extends ScrollPane {
 
     private ActionSetHyperLink getArtistHyperLink(ArtistSimplified artistSimplified) {
         return ActionSetHyperLink.withText(artistSimplified.getName())
+                .andExternalUrl(artistSimplified.getExternalUrls().get("spotify"))
                 .andUri(artistSimplified.getUri());
+
     }
 
     private ActionSetHyperLink getAlbumHyperLink(AlbumSimplified albumSimplified) {
-        return ActionSetHyperLink.withText(albumSimplified.getName())
+        ActionSetHyperLink albumHyperLink = ActionSetHyperLink.withText(albumSimplified.getName())
                 .andExternalUrl(albumSimplified.getExternalUrls().get("spotify"))
                 .andUri(albumSimplified.getUri());
+        albumHyperLink.setFont(Font.font(16));
+        return albumHyperLink;
     }
 
     private void addAlbumImages(List<AlbumSimplified> recommendedAlbums) {

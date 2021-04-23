@@ -16,7 +16,7 @@ public class FactsView extends InformationView {
                 "Duration:", "Record Label:");
         for (int i = 0; i < labelTextList.size(); i++) {
             Text informationLabelText = new Text(labelTextList.get(i));
-            informationLabelText.setStyle("-fx-fill: #d204ba; -fx-font-size: 14; -fx-font-weight: bold; " +
+            informationLabelText.setStyle("-fx-fill: white; -fx-font-size: 14; -fx-font-weight: bold; " +
                     "-fx-underline: true;");
             add(informationLabelText, 0, i);
         }
@@ -43,7 +43,7 @@ public class FactsView extends InformationView {
                 new Text(String.format("%d minutes", albumDuration.toMinutes())),
                 new Text(album.getLabel())
         );
-        for(Text t: informationTextList) { t.setStyle("-fx-fill: #d204ba; -fx-font-size: 14; -fx-font-weight: bold;"); }
+        for(Text t: informationTextList) { t.setStyle("-fx-fill: white; -fx-font-size: 14; -fx-font-weight: bold;"); }
         return informationTextList;
     }
 
