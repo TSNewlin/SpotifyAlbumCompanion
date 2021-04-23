@@ -16,27 +16,38 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class InformationInputArea extends VBox {
+public class InputArea extends VBox {
 
     private final List<Listener> eventListeners = new ArrayList<>();
     private final BooleanProperty searchEnabled = new SimpleBooleanProperty(false);
     private final FilterSwitch filterSwitch = new FilterSwitch();
     private final TextField searchBar = new TextField();
+    private final Button recommendationsSearchButton = new Button("Search for Album Recommendations");
 
-    public InformationInputArea() {
-        Node queryArea = setUpInputArea();
-        getChildren().add(queryArea);
+    public InputArea() {
+        Node topInputArea = setUpTopInputArea();
+        setUpRecommendationsSearchButton();
+        getChildren().addAll(topInputArea, recommendationsSearchButton);
         setUpFilterSwitchEvents();
         configureSearchEnablingBindingProperty();
         setAlignment(Pos.CENTER);
     }
 
-    private Node setUpInputArea() {
+    public void enableRecommendationsSearchButton(){
+        recommendationsSearchButton.setDisable(false);
+    }
+
+    private Node setUpTopInputArea() {
         HBox innerQueryArea = setUpSearchArea();
         HBox inputBox = new HBox(35);
         inputBox.setPadding(new Insets(5, 0, 5, 0));
         inputBox.getChildren().addAll(innerQueryArea, filterSwitch);
         return inputBox;
+    }
+
+    private void setUpRecommendationsSearchButton(){
+        recommendationsSearchButton.setDisable(true);
+        recommendationsSearchButton.setOnAction(event -> fireOnRecommendationsSearchButtonPressed());
     }
 
     private void setUpFilterSwitchEvents() {
@@ -89,6 +100,7 @@ public class InformationInputArea extends VBox {
     public interface Listener {
         void onAlbumTitleSpecified(String albumTitle);
         void onInformationTypeSelected(InformationType informationType);
+        void onRecommendationsSearchButtonPressed();
     }
 
     public void addListener(Listener listener) {
@@ -108,5 +120,11 @@ public class InformationInputArea extends VBox {
             eventListener.onInformationTypeSelected(filterSwitch.getSelectedFilterType());
         }
         filterSwitch.changeSelectedFilter();
+    }
+
+    private void fireOnRecommendationsSearchButtonPressed() {
+        for (Listener eventListener : eventListeners) {
+            eventListener.onRecommendationsSearchButtonPressed();
+        }
     }
 }

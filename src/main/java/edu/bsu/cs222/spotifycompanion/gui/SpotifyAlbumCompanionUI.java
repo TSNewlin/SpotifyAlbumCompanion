@@ -32,6 +32,8 @@ public class SpotifyAlbumCompanionUI extends Application {
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
     private final RecommendationsArea recommendationsArea = new RecommendationsArea();
     private final SpotifyWebApiExceptionAlert spotifyWebApiExceptionAlert = new SpotifyWebApiExceptionAlert();
+    private final InputArea inputArea = new InputArea();
+    private final AlbumAttributesBox albumAttributesBox = new AlbumAttributesBox();
     private SpotifyApiApplicant apiApplicant;
     private Album foundAlbum;
 
@@ -57,26 +59,20 @@ public class SpotifyAlbumCompanionUI extends Application {
 
     private Parent setUpUI() {
         GridPane mainGrid = new GridPane();
-        VBox recommendationArea = setUpRecommendedArea();
-        VBox informationInputArea = setUpInformationInputArea();
+        mainGrid.setHgap(2);
+        setUpInputArea();
         VBox spotifyLogo = setUpSpotifyLogoImage();
         ScrollPane informationViewArea = setUpInformationViewArea();
-        mainGrid.add(recommendationArea, 1, 0, 1, 2);
-        mainGrid.add(informationInputArea, 0, 0);
-        mainGrid.add(spotifyLogo, 1, 2);
-        mainGrid.add(informationViewArea, 0, 1);
+        mainGrid.add(recommendationsArea, 2, 0, 1, 2);
+        mainGrid.add(inputArea, 0, 0);
+        mainGrid.add(spotifyLogo, 2, 2);
+        mainGrid.add(informationViewArea, 1, 0, 1, 2);
+        mainGrid.add(albumAttributesBox, 0, 1, 1, 2);
         return mainGrid;
     }
 
-    private VBox setUpRecommendedArea() {
-        recommendationsArea.addListener(() -> searchForRecommendationsOf(foundAlbum));
-        recommendationsArea.setPrefWidth(300);
-        return new VBox(recommendationsArea);
-    }
-
-    private VBox setUpInformationInputArea() {
-        InformationInputArea informationInputArea = new InformationInputArea();
-        informationInputArea.addListener(new InformationInputArea.Listener() {
+    private void setUpInputArea() {
+        inputArea.addListener(new InputArea.Listener() {
             @Override
             public void onAlbumTitleSpecified(String albumTitle) {
                 querySpotifyForAlbum(albumTitle);
@@ -86,8 +82,13 @@ public class SpotifyAlbumCompanionUI extends Application {
             public void onInformationTypeSelected(InformationType informationType) {
                 changeSeenOutput(informationType);
             }
+
+            @Override
+            public void onRecommendationsSearchButtonPressed() {
+                searchForRecommendationsOf(foundAlbum);
+            }
+
         });
-        return new VBox(informationInputArea);
     }
 
     private VBox setUpSpotifyLogoImage() {
@@ -106,8 +107,9 @@ public class SpotifyAlbumCompanionUI extends Application {
         factsView.setManaged(true);
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(innerScrollBox);
-        scrollPane.setPrefHeight(300);
+        scrollPane.setPrefHeight(400);
         scrollPane.setPrefWidth(300);
+        scrollPane.setStyle("-fx-border-color: transparent;" + "-fx-focus-color: transparent;");
         return scrollPane;
     }
 
@@ -118,7 +120,8 @@ public class SpotifyAlbumCompanionUI extends Application {
                 this.foundAlbum = album;
                 factsView.show(album);
                 tracksView.show(album);
-                recommendationsArea.addAlbumTitle(album);
+                albumAttributesBox.show(album);
+                inputArea.enableRecommendationsSearchButton();
             } catch (SpotifyWebApiException exception) {
                 spotifyWebApiExceptionAlert.showAlert(exception);
             }
@@ -126,8 +129,8 @@ public class SpotifyAlbumCompanionUI extends Application {
     }
 
     private void searchForRecommendationsOf(Album album) {
-        executor.execute(() -> Platform.runLater(() ->{
-            try{
+        executor.execute(() -> Platform.runLater(() -> {
+            try {
                 AlbumRecommendations recommendations = apiApplicant.searchForRecommendations(album);
                 recommendationsArea.show(recommendations);
             } catch (SpotifyWebApiException exception) {
