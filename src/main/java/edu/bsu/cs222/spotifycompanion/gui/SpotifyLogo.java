@@ -23,7 +23,7 @@ public class SpotifyLogo extends VBox {
     }
 
     private Hyperlink setUpSpotifyLogoImage() {
-        ImageView view = new ImageView(new Image("Spotify_Logo_CMYK_Green (Resized).png"));
+        ImageView view = new ImageView(new Image("Spotify_Logo_CMYK_Green.png"));
         spotifyLink.setGraphic(view);
         spotifyLink.setOnAction(event -> openGetSpotifyPage());
         return spotifyLink;
