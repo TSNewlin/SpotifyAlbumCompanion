@@ -58,11 +58,10 @@ public class SpotifyAlbumCompanionUI extends Application {
         mainGrid.setStyle("-fx-background-color: #2d2d2d;");
         mainGrid.setHgap(2);
         setUpInputArea();
-        VBox spotifyLogo = setUpSpotifyLogoImage();
         ScrollPane informationViewArea = setUpInformationViewArea();
         mainGrid.add(recommendationsArea, 2, 0, 1, 2);
         mainGrid.add(inputArea, 0, 0);
-        mainGrid.add(spotifyLogo, 2, 2);
+        mainGrid.add(new SpotifyLogo(), 2, 2);
         mainGrid.add(informationViewArea, 1, 0, 1, 2);
         mainGrid.add(albumAttributesBox, 0, 1, 1, 2);
         return mainGrid;
