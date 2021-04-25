@@ -8,10 +8,13 @@ Using Spotify's API users are able to get ten album recommendations based on the
 album companion.
 
 <h3>Accreditation</h3>
-Links to libraries and wrappers used in this project:\
-[Spotify Web API Wrapper](https://github.com/thelinmichael/spotify-web-api-java) \
-[Guava](https://github.com/google/guava) \
-[Gson](https://github.com/google/gson) \
+Links to libraries and wrappers used in this project:
+
+[Spotify Web API Wrapper](https://github.com/thelinmichael/spotify-web-api-java)
+
+[Guava](https://github.com/google/guava)
+
+[Gson](https://github.com/google/gson)
 
 <h3>License</h3>
 This Project is licensed under the [MIT license](https://opensource.org/licenses/MIT).
