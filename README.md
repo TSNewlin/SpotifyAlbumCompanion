@@ -17,7 +17,7 @@ Links to libraries and wrappers used in this project:
 [Gson](https://github.com/google/gson)
 
 <h3>License</h3>
-This Project is licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This Project is licensed under the [MIT license](https://opensource.org/licenses/MIT) .
 
 <h3>Contributors</h3>
 Tyler Newlin, Jude King, Nathaniel Clark, Alex Hupe
