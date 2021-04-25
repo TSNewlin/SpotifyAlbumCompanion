@@ -2,7 +2,6 @@ package edu.bsu.cs222.spotifycompanion.gui;
 
 import com.wrapper.spotify.model_objects.specification.Album;
 import com.wrapper.spotify.model_objects.specification.ArtistSimplified;
-import com.wrapper.spotify.model_objects.specification.Image;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
@@ -20,8 +19,7 @@ public class AlbumAttributesBox extends VBox {
 
     public void show(Album album) {
         getChildren().clear();
-        Image albumCover = album.getImages()[1];
-        ImageView albumCoverImageView = new ImageView(albumCover.getUrl());
+        ImageView albumCoverImageView = new ImageView(album.getImages()[1].getUrl());
         ActionSetHyperLink albumHyperLink = ActionSetHyperLink.withText(album.getName())
                 .andExternalUrl(album.getExternalUrls().get("spotify")).andUri(album.getUri());
         albumHyperLink.setFont(Font.font(28));
@@ -31,7 +29,7 @@ public class AlbumAttributesBox extends VBox {
 
     private HBox createArtistHyperLinkBox(Album album) {
         HBox artistHyperLinkBox = new HBox();
-        for (ArtistSimplified artist: album.getArtists()) {
+        for (ArtistSimplified artist : album.getArtists()) {
             ActionSetHyperLink artistHyperLink = ActionSetHyperLink.withText(artist.getName())
                     .andExternalUrl(artist.getExternalUrls().get("spotify"))
                     .andUri(artist.getUri());

@@ -43,7 +43,9 @@ public class FactsView extends InformationView {
                 new Text(String.format("%d minutes", albumDuration.toMinutes())),
                 new Text(album.getLabel())
         );
-        for(Text t: informationTextList) { t.setStyle("-fx-fill: white; -fx-font-size: 14; -fx-font-weight: bold;"); }
+        for (Text t : informationTextList) {
+            t.setStyle("-fx-fill: white; -fx-font-size: 14; -fx-font-weight: bold;");
+        }
         return informationTextList;
     }
 
